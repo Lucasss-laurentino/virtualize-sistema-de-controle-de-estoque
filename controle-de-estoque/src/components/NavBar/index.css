@@ -1,0 +1,29 @@
+.navBar {
+    width: 100%;
+    height: 15vh;
+
+    background-color: black;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.div-logo {
+    width: 25%;
+}
+
+.img-logo {
+
+    width: 100%;
+
+}
+
+.menu-user {
+    width: 10%;
+    height: 45%;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}

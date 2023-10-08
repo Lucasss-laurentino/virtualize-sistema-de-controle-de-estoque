@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Menu_lateral } from './components/Menu_lateral';
+import { Page_default } from './components/Page_default';
 
 export default function appRoute() {
     
     return(
         <Router>
             <Routes>
-                <Route path='/' element={< Menu_lateral />} >
+                <Route path='/' element={< Page_default />} >
 
                 </Route>
             </Routes>
