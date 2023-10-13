@@ -1,15 +1,24 @@
+import { useContext, useEffect } from 'react';
 import { Apresentacao_dados } from '../Apresentacao_dados';
 import './index.css';
+import { CurrentPageContext } from '../../Contexts/CurrentPageContext';
 
 export const Menu_lateral = () => {
+    
+    const { id, changePage } = useContext(CurrentPageContext);
+    
     return (
         <>
             <div className="menu_e_apresentacao_dados">
                 <div className='menu-lateral'>
                     <div className="div-list-items-menu">
                         <ul className="list-menu">
+                            
+                            <li className="items-menu" onClick={() => changePage('0')} >Página Inicial</li>
+
                             <li className='item-destacado'>Gerenciamento</li>
-                            <li className='items-menu'>
+                            
+                            <li className='items-menu' onClick={() => changePage('1')}>
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
                                     preserveAspectRatio="xMidYMid meet">
@@ -41,7 +50,8 @@ export const Menu_lateral = () => {
                                 </svg>
                                 <p className='text-items-menu'>Produtos</p>
                             </li>
-                            <li className='items-menu'>
+                            
+                            <li className='items-menu' onClick={() => changePage('2')}>
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="20" height="20" viewBox="0 0 512.000000 512.000000"
                                     preserveAspectRatio="xMidYMid meet">
@@ -71,8 +81,10 @@ export const Menu_lateral = () => {
                                 </svg>
                                 <p className='text-items-menu'>Categorias</p>
                             </li>
+                            
                             <li className='item-destacado'>Movimentação</li>
-                            <li className='items-menu'>
+                            
+                            <li className='items-menu' onClick={() => changePage('3')}>
 
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
@@ -104,7 +116,7 @@ export const Menu_lateral = () => {
                                 </svg>
                                 <p className='text-items-menu'>Entrada</p>
                             </li>
-                            <li className='items-menu'>
+                            <li className='items-menu' onClick={() => changePage('4')}>
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
                                     preserveAspectRatio="xMidYMid meet">
@@ -135,7 +147,7 @@ export const Menu_lateral = () => {
                                 <p className='text-items-menu'>Saídas</p>
                             </li>
                             <li className='item-destacado'>Administração</li>
-                            <li className='items-menu'>
+                            <li className='items-menu' onClick={() => changePage('5')}>
 
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
@@ -170,7 +182,7 @@ export const Menu_lateral = () => {
                                 <p className='text-items-menu'>Usuários</p>
 
                             </li>
-                            <li className='items-menu'>
+                            <li className='items-menu' onClick={() => changePage('6')}>
 
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
