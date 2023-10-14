@@ -8,7 +8,7 @@ export const NavBar = () => {
 
             <div className="navBar">
                 <div className="div-logo">
-                    <img src="../../../img/logopreto.png" className='img-logo' alt="" />
+                    <img src="../../../img/logo.png" className='img-logo' alt="" />
                 </div>
                 <div className="menu-user">
                     <div className="icon-user">

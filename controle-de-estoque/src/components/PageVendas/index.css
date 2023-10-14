@@ -1,0 +1,23 @@
+.mesAtual {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #c5c4c4;
+    border-radius: 6px;
+    color: #757575;
+    background: linear-gradient(to top, #e9e2e2, white);
+}
+
+.btn-search-avan {
+
+    border: none;
+
+    background-color: #35A398;
+
+    margin-left: 10px;
+
+    padding-right: 10px;
+    padding-left: 10px;
+
+    border-radius: 3px;
+
+}

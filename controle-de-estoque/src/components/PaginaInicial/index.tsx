@@ -52,7 +52,7 @@ export const PaginaInicial = () => {
                         width="30" height="30" viewBox="0 0 512.000000 512.000000"
                         preserveAspectRatio="xMidYMid meet">
                         <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-                            fill="#070606" stroke="none">
+                            fill="#757575" stroke="none">
                             <path d="M3624 5110 c-32 -13 -64 -59 -64 -91 0 -18 11 -41 29 -61 l29 -33
                                     208 -5 209 -5 -134 -150 c-271 -304 -464 -487 -702 -664 -534 -400 -1152 -653
                                     -1819 -745 -95 -13 -318 -31 -493 -39 -58 -3 -71 -7 -95 -30 -37 -38 -37 -96

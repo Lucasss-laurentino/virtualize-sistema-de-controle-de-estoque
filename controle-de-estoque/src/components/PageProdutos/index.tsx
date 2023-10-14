@@ -1,13 +1,27 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import './index.css';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
+import { ModalCreateProduct } from '../ModalCreateProduct';
 
 export const PaginaProdutos = () => {
-    
+
     const { produtos } = useContext(ProdutoContext);
+
+    const [classFormProduto, setClassFormProduto] = useState('div-form-produtos-none');
+
+    const openForm = () => {
+        setClassFormProduto('div-form-produtos');
+    }
+
+    const closeForm = () => {
+        setClassFormProduto('div-form-produtos-none');
+    }
 
     return (
         <>
+
+            <ModalCreateProduct />
+
             <div className="paginaProdutos">
 
                 <div className="icon-produtos">
@@ -17,7 +31,7 @@ export const PaginaProdutos = () => {
                         preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-                            fill="#000000" stroke="none">
+                            fill="#757575" stroke="none">
                             <path d="M1389 4392 c-536 -224 -988 -415 -1002 -425 -15 -9 -36 -35 -47 -57
                                 -20 -39 -20 -56 -20 -1269 0 -847 3 -1238 11 -1258 6 -15 20 -39 32 -52 12
                                 -13 466 -245 1010 -517 763 -382 996 -494 1025 -494 28 -1 115 38 374 167
@@ -71,32 +85,7 @@ export const PaginaProdutos = () => {
                     </div>
                     <div className="itens-menu-produto">
 
-                        <button className='btn-menu-produtos-categorias'>
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                width="20" height="20" viewBox="0 0 512.000000 512.000000"
-                                preserveAspectRatio="xMidYMid meet">
-
-                                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-                                    fill="#000000" stroke="none">
-                                    <path d="M4785 4950 l-171 -170 -994 -1 -995 -1 -1263 -1274 c-1406 -1418
-                                        -1316 -1319 -1316 -1459 -1 -132 -47 -79 966 -1091 1015 -1013 942 -949 1083
-                                        -949 136 0 44 -86 1413 1320 l1232 1266 0 1037 0 1037 167 167 c155 155 167
-                                        170 167 204 0 46 -40 84 -86 84 -28 0 -54 -23 -203 -170z m-545 -545 l-206
-                                        -206 -56 26 c-166 76 -351 43 -479 -84 -170 -171 -170 -431 0 -602 64 -64 139
-                                        -102 230 -119 178 -32 371 70 454 240 30 61 32 72 32 175 0 99 -3 117 -29 178
-                                        l-29 69 199 199 c109 109 202 199 206 199 5 0 8 -409 8 -910 l0 -909 -1200
-                                        -1233 c-959 -986 -1208 -1236 -1239 -1247 -82 -30 -37 -70 -1012 906 -978 979
-                                        -929 925 -896 1005 9 21 477 500 1247 1276 l1232 1242 871 0 872 0 -205 -205z
-                                        m-370 -321 c17 -3 30 -8 30 -12 0 -3 -40 -47 -89 -97 -49 -50 -93 -103 -96
-                                        -117 -14 -55 39 -108 100 -99 11 1 63 45 116 98 l96 95 12 -32 c28 -83 7 -180
-                                        -56 -250 -79 -88 -201 -110 -304 -54 -177 96 -182 348 -9 443 69 38 107 43
-                                        200 25z"/>
-                                </g>
-                            </svg>
-                            Categorias
-                        </button>
-
-                        <button className='btn-adc-produto'>
+                        <button className='btn-adc-produto' onClick={openForm}>
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                 width="20" height="20" viewBox="0 0 512.000000 512.000000"
                                 preserveAspectRatio="xMidYMid meet">
@@ -121,26 +110,183 @@ export const PaginaProdutos = () => {
 
                 <div className="div-tabela-produtos">
 
-                    <ul className='list-produtos'>
-                        {produtos.map((produto) => {
-                            return(
-                                <>
-                                    <li className='linha-produto'>
-                                        <div className='div-dados-produto'>
-                                            <p className='texto-dados-produto'>{produto.nome}</p>
-                                            <p className='texto-dados-produto'>{produto.categoria}</p>
-                                            <p className='texto-dados-produto'>{produto.preco}</p>
-                                            <p className='texto-dados-produto'>{produto.entrada}</p>
-                                            <p className='texto-dados-produto'>{produto.saida}</p>
-                                            <p className='texto-dados-produto'>{produto.total}</p>
+                    <table className="table table-striped">
+                        <thead className="">
+                            <tr>
+                                <th scope="col" className='cor'>Cód</th>
+                                <th scope="col" className='cor'>Produto</th>
+                                <th scope="col" className='cor'>Categoria</th>
+                                <th scope="col" className='cor'>Preço</th>
+                                <th scope="col" className='cor'>Estoque</th>
+                                <th scope="col" className='cor'>Entrada</th>
+                                <th scope="col" className='cor'>Saída</th>
+                                <th scope="col" className='cor'>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {produtos.map((produto) => {
+                                return (
+                                    <tr key={produto.id}>
+                                        <th className='cor'>{produto.id}</th>
+                                        <td className='cor'>{produto.nome}</td>
+                                        <td className='cor'>{produto.categoria}</td>
+                                        <td className='cor'>{produto.preco}</td>
+                                        <td className='cor'>{produto.quantidade}</td>
+                                        <td className='cor'>{produto.entrada}</td>
+                                        <td className='cor'>{produto.saida}</td>
+                                        <td className='cor'>{produto.total}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className={classFormProduto}>
+
+                    <div className="head-form-produto">
+
+                        <h6 className='title-novo-produto'>Novo produto</h6>
+
+                        <svg onClick={closeForm} version="1.0" xmlns="http://www.w3.org/2000/svg" className='svg-close'
+                            width="16" height="16" viewBox="0 0 512.000000 512.000000"
+                            preserveAspectRatio="xMidYMid meet">
+
+                            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                fill="#ffff" stroke="none">
+                                <path d="M4580 4789 c-14 -5 -474 -458 -1022 -1007 l-998 -997 -997 997
+                                    c-1085 1084 -1016 1021 -1110 1003 -49 -9 -109 -69 -118 -118 -18 -94 -81 -25
+                                    1003 -1109 l997 -998 -1002 -1002 c-1087 -1089 -1026 -1021 -1009 -1114 9 -47
+                                    73 -111 120 -120 93 -17 25 -78 1113 1009 l1003 1002 1002 -1002 c1090 -1089
+                                    1021 -1026 1115 -1008 49 9 109 69 118 118 18 94 81 25 -1008 1114 l-1002
+                                    1003 1002 1002 c1086 1087 1026 1021 1009 1113 -17 91 -127 149 -216 114z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <div className="body-form-produtos">
+                        <form action="">
+                            <div className="container d-flex justify-content-center w-100">
+                                <div className="container col-10 mt-3 person-row-top-form-produtos">
+                                    <div className="row w-100">
+                                        <div className="col-8 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-4'>Nome</span>
+                                                <input className='input-form-produto col-8' type="text" />
+                                            </div>
                                         </div>
-                                    </li>
+                                        <div className="col-4 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-3'>Código Próprio</span>
+                                                <input className='input-form-produto col-12' type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row w-100 mb-4">
+                                        <div className="col-6 p-0 mt-2">
+                                            <div className="span-input mx-2">
+                                                <span className='px-3'>Categoria</span>
+                                                <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-tags col-1" viewBox="0 0 16 16">
+                                                        <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z"/>
+                                                        <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-10 m-0' type="text" />
 
-                                </>
-                            );
-                        })}
-                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-6 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-3'>Palavras chave</span>
+                                                <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#606d5d" className="bi bi-key col-1" viewBox="0 0 16 16">
+                                                        <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                                                        <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-11 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div className="container d-flex justify-content-center w-100">
+                                <div className="container col-10 mt-3 person-row-top-form-produtos">
+                                    <h6 className='titulo-bloco2-form pt-3 px-2'>Valores unitários</h6>
+                                    <div className="row w-100 mb-4 justify-content-between">
+                                        <div className="col-4 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-3'>Preço de custo</span>
+                                                <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#606d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
+                                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-7 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-4 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-3'>Preço de venda</span>
+                                                <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
+                                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-7 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-4 p-0 mt-2">
+                                            <div className="span-input m-0">
+                                                <span className=''>Margem de contribuição</span>
+                                                <div className="span-icon-input m-0 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
+                                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-7 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="container d-flex justify-content-center w-100">
+                                <div className="container col-10 mt-3 person-row-top-form-produtos">
+                                    <h6 className='titulo-bloco2-form pt-3 px-2'>Estoque</h6>
+                                    <div className="row w-100 mb-4 justify-content-between">
+                                        <div className="col-6 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-4'>Estoque atual</span>
+                                                <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-list col-1" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-10 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-6 p-0 mt-2">
+                                            <div className="span-input">
+                                                <span className='px-4'>Estoque mínimo</span>
+                                                    <div className="span-icon-input d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-list col-1" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                                                    </svg>
+                                                    <input className='input-form-produto col-10 m-0' type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="container d-flex justify-content-end col-10 mt-2">
+                                <button className='btn-cadastrar-produto'>Salvar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
             </div>
