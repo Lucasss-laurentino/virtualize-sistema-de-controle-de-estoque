@@ -1,0 +1,36 @@
+.div-form-vendas-none {
+    display: none;
+}
+
+.div-form-vendas {
+
+    width: 100%;
+    height: 90vh;
+    top: 0;
+    position: absolute;
+    background-color: white;
+    display: block;
+}
+
+.head-form-vendas {
+
+    background-color: #35A398;
+
+}
+
+.bloco
+{
+    border: 1px solid #e2dddd;
+    background-color: #EEEEEE;
+    border-radius: 5px;
+}
+
+.span-vendas {
+    color: #605d5d;
+    font-size: 13px;
+    display: block;
+}
+
+.input-data-vendas{
+    color: #605d5d;
+}

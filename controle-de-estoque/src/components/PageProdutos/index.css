@@ -4,11 +4,6 @@
     
 }
 
-.div-form-produtos {
-    display: block;
-
-}
-
 .icon-produtos {
     display: flex;
 
@@ -157,6 +152,7 @@ tr {
     position: absolute;
     z-index: 20;
 
+    display: block;
 }
 
 .head-form-produto {
