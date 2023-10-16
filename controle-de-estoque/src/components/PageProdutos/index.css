@@ -274,3 +274,7 @@ tr {
     background-color: #4FB068;
     border-radius: 5px;
 }
+
+.svg-close:hover {
+    cursor: pointer;
+}

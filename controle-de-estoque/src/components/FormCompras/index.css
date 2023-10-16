@@ -1,0 +1,39 @@
+.header-row {
+    
+    background-color: #DDDDDD;
+}
+
+.pad {
+    padding-left: 2%;
+}
+
+.title-table {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 11px;
+}
+
+.p-title {
+    margin: 0;
+}
+
+.body-row {
+    background-color: #EEEEEE;
+}
+
+.input-form-produto::placeholder {
+    color: #605d5d;
+    text-align: end;
+}
+
+.btn-trash {
+    border: none;
+    height: 50%;
+    border-radius: 3px;
+    background-color: #c9322c;
+}
+
+.footer-row {
+    background-color: #DDDDDD;
+}

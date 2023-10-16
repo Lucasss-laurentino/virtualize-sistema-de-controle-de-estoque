@@ -1,5 +1,5 @@
 import './index.css';
-import { FormVendas } from '../formVendas';
+import { FormVendas } from '../FormVendas';
 import { useState } from 'react';
 
 export const PageVendas = () => {

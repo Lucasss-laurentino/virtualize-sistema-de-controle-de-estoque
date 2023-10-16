@@ -10,6 +10,8 @@
     position: absolute;
     background-color: white;
     display: block;
+    padding-bottom: 40px;
+    overflow-y: auto;
 }
 
 .head-form-vendas {
@@ -33,4 +35,12 @@
 
 .input-data-vendas{
     color: #605d5d;
+}
+
+.color-title {
+    color: #605d5d;
+}
+
+.bi:hover {
+    cursor: pointer;
 }

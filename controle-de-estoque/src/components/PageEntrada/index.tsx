@@ -1,8 +1,15 @@
+import { useState } from 'react';
+import { FormCompras } from '../FormCompras';
 import './index.css';
 
 export const PageEntrada = () => {
+
+    const [classFormCompras, setClassFormCompras] = useState('div-form-vendas');
+
     return (
         <>
+            <div className="position-relative">
+
             <div className="icon-produtos">
 
                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +127,10 @@ export const PageEntrada = () => {
 
                     </tbody>
                 </table>
+            </div>
+
+            <FormCompras classFormCompras={classFormCompras} setClassFormCompras={setClassFormCompras} />
+
             </div>
 
         </>

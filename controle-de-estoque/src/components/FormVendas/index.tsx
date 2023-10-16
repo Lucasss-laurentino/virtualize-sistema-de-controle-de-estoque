@@ -43,7 +43,7 @@ export const FormVendas = ({classFormVendas, setClassFormVendas}: Props) => {
                 </div>
             </div>
 
-            <h6 className='mt-4 mb-3 d-flex justify-content-center'>Carrinho</h6>
+            <h6 className='mt-4 mb-3 d-flex justify-content-center color-title'>Carrinho</h6>
 
             <div className="div-form-body mt-3 container d-flex justify-content-center align-items-center">
                 <div className="col-11 bloco d-flex">
