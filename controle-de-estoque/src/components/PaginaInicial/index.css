@@ -5,6 +5,19 @@
     align-items: end;
 }
 
+@media (max-width: 614px) {
+    
+    .current-page {
+        padding-top: 10%;
+        padding-bottom: 6%;
+    }
+
+    .grafico {
+        width: 100%;
+    }
+
+}
+
 .icon-page {
     display: flex;
 }

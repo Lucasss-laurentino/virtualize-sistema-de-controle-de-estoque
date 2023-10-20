@@ -35,10 +35,8 @@
     font-weight: bolder;
     font-size: 18px;
 
-    padding-left: 20px;
-
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
 
 }
@@ -50,16 +48,21 @@
 
     color: #ffffff;
 
-    padding-left: 40px;
-
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
 }
 
+@media (max-width: 614px) {
+    .items-menu {
+        font-size: 10px;
+    }
+    .item-destacado{
+        font-size: 14px;
+    }
+}
+
 .items-menu:hover {
-    width: 80%;
-    height: 42px;
 
     background-color: #1f292e;
 

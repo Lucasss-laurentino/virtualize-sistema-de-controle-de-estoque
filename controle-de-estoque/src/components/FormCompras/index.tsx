@@ -8,7 +8,7 @@ interface Props {
 export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) => {
 
     const closeFormVendas = () => {
-        setClassFormCompras('div-form-vendas-none');
+        setClassFormCompras('div-form-compras-none');
     }
 
     return (

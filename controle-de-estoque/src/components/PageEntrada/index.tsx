@@ -4,7 +4,7 @@ import './index.css';
 
 export const PageEntrada = () => {
 
-    const [classFormCompras, setClassFormCompras] = useState('div-form-vendas');
+    const [classFormCompras, setClassFormCompras] = useState('div-form-compras-none');
 
     return (
         <>
@@ -87,7 +87,7 @@ export const PageEntrada = () => {
                 </div>
                 <div className="itens-menu-produto">
 
-                    <button className='btn-adc-produto'>
+                    <button className='btn-adc-produto' onClick={() => setClassFormCompras('div-form-compras')}>
                         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                             width="20" height="20" viewBox="0 0 512.000000 512.000000"
                             preserveAspectRatio="xMidYMid meet">

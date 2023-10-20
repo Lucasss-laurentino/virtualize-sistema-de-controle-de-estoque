@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { PaginaInicial } from '../PaginaInicial';
 import './index.css';
 import { CurrentPageContext } from '../../Contexts/CurrentPageContext';

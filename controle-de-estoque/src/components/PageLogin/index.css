@@ -1,0 +1,66 @@
+.page-login-components-none {
+    visibility: hidden;
+}
+
+.page-login-components {
+    width: 100%;
+    height: 100vh;
+
+    position: fixed;
+    top: 0px;
+    right: 0px;
+
+    background-color: white;
+
+    transition-delay: 0.2s;
+
+    visibility: visible;
+
+    z-index: 6;
+
+}
+
+.div-header-login {
+
+    width: 100%;
+
+}
+
+.logo-login {
+    width: 13%;
+}
+
+.lista-config {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.text-lista-nav-login {
+    text-align: center;
+}
+
+.div-body-login {
+
+    width: 40%;
+
+    position: fixed;
+    top: 17%;
+    left: 35%;
+
+    height: 70vh;
+
+    background-color: #F6F1F1;
+
+    border-radius: 10px;
+}
+
+.btn-form-login {
+    width: 100%;
+    padding: 6px;
+    border-radius: 30px;
+    border: none;
+    background-color: #36474F;
+    color: white;
+    font-weight: bold;
+}

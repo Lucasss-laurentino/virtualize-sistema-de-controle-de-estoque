@@ -10,8 +10,15 @@
 
 }
 
+@media (max-width: 614px) {
+    .navBar {
+        height: 9vh;
+    }
+
+}
+
 .div-logo {
-    width: 18%;
+    width: 21%;
     margin-left: 2%;
 }
 
@@ -28,4 +35,8 @@
     display: flex;
     justify-content: center;
     align-items: end;
+}
+
+.icon-user:hover {
+    cursor: pointer;
 }
