@@ -14,13 +14,15 @@ export default function appRoute() {
                 <CategoriaProvider>
                     <ValidarInputCadastroProvider>
                         <LoginContextProvider>
-                            <Router>
-                                <Routes>
-                                    <Route path='/' element={< Page_default />} >
+                            <ProdutoProvider>
+                                <Router>
+                                    <Routes>
+                                        <Route path='/' element={< Page_default />} >
 
-                                    </Route>
-                                </Routes>
-                            </Router>
+                                        </Route>
+                                    </Routes>
+                                </Router>
+                            </ProdutoProvider>
                         </LoginContextProvider>
                     </ValidarInputCadastroProvider>
                 </CategoriaProvider>

@@ -1,7 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './index.css';
 import { CategoriaContext } from '../../Contexts/CategoriaContext';
 import Categoria from '../../types/Categoria';
+import React from 'react';
+import { ProdutoContext } from '../../Contexts/ProdutoContext';
+import Produto from '../../types/Produto';
 
 interface Props {
     classFormProduto: string,
@@ -10,7 +13,14 @@ interface Props {
 
 export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
 
+    const [nomeProduto, setNomeProduto] = useState('');
+    const [codigoProprio, setCodigoProprio] = useState('');
     const [categoria, setCategoria] = useState('');
+    const [palavraChave, setPalavraChave] = useState('');
+    const [precoDeCusto, setPrecoDeCusto] = useState('');
+    const [precoDeVenda, setPrecoDeVenda] = useState('');
+    const [estoqueAtual, setEstoqueAtual] = useState('');
+    const [estoqueMinimo, setEstoqueMinimo] = useState('');
 
     const { encontrarCategoria, categoriaDigitada } = useContext(CategoriaContext);
 
@@ -20,10 +30,14 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
 
     const [classInputSelect, setClassInputSelect] = useState('input-form-categoria col-12 m-0');
 
+    const { criarProduto } = useContext(ProdutoContext)
+
     useEffect(() => {
 
         encontrarCategoria(categoria)
-        
+
+        console.log(categoria)
+
     }, [categoria])
 
     useEffect(() => {
@@ -36,6 +50,44 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
 
     const closeForm = () => {
         setClassFormProduto('div-form-produtos-none');
+    }
+
+    const setarCategoriaEocultarLista = (categoria: string) => {
+
+        setCategoria(categoria);
+        setClassListaCategoria('lista-categoria-digitada-none col-12')
+        setClassInputSelect('input-form-categoria col-12 m-0') 
+    
+    }
+
+    const limparFormEcadastrar = () => {
+
+        const produto: Produto = {
+
+            id: '',
+            nome: nomeProduto,
+            codigo_proprio: codigoProprio,
+            categoria,
+            palavra_chave: palavraChave,
+            preco_de_custo: precoDeCusto,
+            preco_de_venda: precoDeVenda,
+            estoque_atual: estoqueAtual,
+            estoque_minimo: estoqueMinimo,
+            total: '00,00'
+
+        }
+
+        criarProduto(produto);
+
+        setNomeProduto('');
+        setCodigoProprio('');
+        setCategoria('');
+        setPalavraChave('');
+        setPrecoDeCusto('');
+        setPrecoDeVenda('');
+        setEstoqueAtual('');
+        setEstoqueMinimo('');    
+        
     }
 
     return (
@@ -70,13 +122,13 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                     <div className="col-8 p-0 mt-2">
                                         <div className="span-input">
                                             <span className='px-4'>Nome</span>
-                                            <input className='input-form-produto col-8' type="text" />
+                                            <input className='input-form-produto col-8' value={nomeProduto} onChange={(valor) => setNomeProduto(valor.target.value)} type="text" />
                                         </div>
                                     </div>
                                     <div className="col-4 p-0 mt-2">
                                         <div className="span-input">
                                             <span className='px-3'>Código Próprio</span>
-                                            <input className='input-form-produto col-12' type="text" />
+                                            <input className='input-form-produto col-12' value={codigoProprio} onChange={(valor) => setCodigoProprio(valor.target.value)} type="text" />
                                         </div>
                                     </div>
                                 </div>
@@ -90,19 +142,19 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
                                                 </svg>
                                                 <div className="col-10 position-relative">
-                                                    <input className={classInputSelect} type="text" onFocus={() => { 
-                                                        setClassListaCategoria('lista-categoria-digitada col-12')
-                                                        setClassInputSelect('input-form-categoria col-12 m-0 border-select-input') 
-                                                        }} onBlur={() => 
-                                                        {
-                                                        setClassListaCategoria('lista-categoria-digitada-none col-12')
-                                                        setClassInputSelect('input-form-categoria col-12 m-0') 
-                                                        }}  name={categoria} onChange={(e) => setCategoria(e.target.value)} />
+                                                    <input className={classInputSelect} type="text" 
+                                                        onFocus={() => { 
+                                                            setClassListaCategoria('lista-categoria-digitada col-12')
+                                                            setClassInputSelect('input-form-categoria col-12 m-0 border-select-input') 
+                                                        }}
+                                                        value={categoria}
+                                                        onChange={(e) => setCategoria(e.target.value)}
+                                                    />
                                                     <div className="col-12">
                                                         <ul className={classListaCategoria}>
                                                             {categoriaLista.map((catList)=> {
                                                                 return(
-                                                                    <li key={catList.id} className='item-lista-categoria'>{catList.categoria}</li>
+                                                                    <li key={catList.id} className='item-lista-categoria' onClick={() => setarCategoriaEocultarLista(catList.categoria)}>{catList.categoria}</li>
                                                                 )
                                                             })}
 
@@ -140,7 +192,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                     <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
                                                     <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                                 </svg>
-                                                <input className='input-form-produto col-11 m-0' type="text" />
+                                                <input className='input-form-produto col-11 m-0' value={palavraChave} onChange={(valor) => setPalavraChave(valor.target.value)} type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +211,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#606d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
                                                     <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
                                                 </svg>
-                                                <input className='input-form-produto col-7 m-0' type="text" />
+                                                <input className='input-form-produto col-7 m-0' value={precoDeCusto} onChange={(valor) => setPrecoDeCusto(valor.target.value)} type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +222,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
                                                     <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
                                                 </svg>
-                                                <input className='input-form-produto col-7 m-0' type="text" />
+                                                <input className='input-form-produto col-7 m-0' value={precoDeVenda} onChange={(valor) => setPrecoDeVenda(valor.target.value)}  type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +252,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-list col-1" viewBox="0 0 16 16">
                                                     <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                                                 </svg>
-                                                <input className='input-form-produto col-10 m-0' type="text" />
+                                                <input className='input-form-produto col-10 m-0' value={estoqueAtual} onChange={(valor) => setEstoqueAtual(valor.target.value)} type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +263,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-list col-1" viewBox="0 0 16 16">
                                                     <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                                                 </svg>
-                                                <input className='input-form-produto col-10 m-0' type="text" />
+                                                <input className='input-form-produto col-10 m-0' value={estoqueMinimo} onChange={(valor) => setEstoqueMinimo(valor.target.value)} type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +272,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                         </div>
 
                         <div className="container d-flex justify-content-end col-10 mt-2">
-                            <button className='btn-cadastrar-produto'>Salvar</button>
+                            <button type='button' className='btn-cadastrar-produto' onClick={() => limparFormEcadastrar()}>Salvar</button>
                         </div>
                     </form>
                 </div>

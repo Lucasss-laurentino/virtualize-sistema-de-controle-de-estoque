@@ -1,9 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import './index.css';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
-import { ModalCreateProduct } from '../ModalCreateProduct';
-import { CategoriaContext } from '../../Contexts/CategoriaContext';
-import Categoria from '../../types/Categoria';
 import { FormProduto } from '../FormProdutos';
 
 export const PaginaProdutos = () => {
@@ -18,8 +15,6 @@ export const PaginaProdutos = () => {
 
     return (
         <>
-
-            <ModalCreateProduct />
 
             <div className="paginaProdutos">
 
@@ -115,11 +110,11 @@ export const PaginaProdutos = () => {
                                 <th scope="col" className='cor'>Cód</th>
                                 <th scope="col" className='cor'>Produto</th>
                                 <th scope="col" className='cor'>Categoria</th>
-                                <th scope="col" className='cor'>Preço</th>
+                                <th scope="col" className='cor'>Custo</th>
+                                <th scope="col" className='cor'>Venda</th>
                                 <th scope="col" className='cor'>Estoque</th>
-                                <th scope="col" className='cor'>Entrada</th>
-                                <th scope="col" className='cor'>Saída</th>
-                                <th scope="col" className='cor'>Total</th>
+                                <th scope="col" className='cor'>Min. estoque</th>
+                                <th scope="col" className='cor'>Palavra chave</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,11 +124,11 @@ export const PaginaProdutos = () => {
                                         <th className='cor'>{produto.id}</th>
                                         <td className='cor'>{produto.nome}</td>
                                         <td className='cor'>{produto.categoria}</td>
-                                        <td className='cor'>{produto.preco}</td>
-                                        <td className='cor'>{produto.quantidade}</td>
-                                        <td className='cor'>{produto.entrada}</td>
-                                        <td className='cor'>{produto.saida}</td>
-                                        <td className='cor'>{produto.total}</td>
+                                        <td className='cor'>{produto.preco_de_custo}</td>
+                                        <td className='cor'>{produto.preco_de_venda}</td>
+                                        <td className='cor'>{produto.estoque_atual}</td>
+                                        <td className='cor'>{produto.estoque_minimo}</td>
+                                        <td className='cor'>{produto.palavra_chave}</td>
                                     </tr>
                                 )
                             })}
