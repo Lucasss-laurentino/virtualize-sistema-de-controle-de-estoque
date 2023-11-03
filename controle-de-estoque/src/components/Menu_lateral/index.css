@@ -4,7 +4,7 @@
 }
 
 .menu-lateral {
-    width: 25%;
+    width: 15%;
     height: 91vh;
 
     background-color: #36474F;
@@ -33,7 +33,7 @@
     color: rgb(237, 234, 234);
 
     font-weight: bolder;
-    font-size: 18px;
+    font-size: 15px;
 
     display: flex;
     justify-content: center;
@@ -48,19 +48,13 @@
 
     color: #ffffff;
 
+    font-size: 13px;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-@media (max-width: 614px) {
-    .items-menu {
-        font-size: 10px;
-    }
-    .item-destacado{
-        font-size: 14px;
-    }
-}
 
 .items-menu:hover {
 

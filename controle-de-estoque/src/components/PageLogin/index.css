@@ -3,6 +3,7 @@
 }
 
 .page-login-components {
+
     width: 100%;
     height: 100vh;
 
@@ -20,10 +21,64 @@
 
 }
 
+.div-body-login-desativado {
+
+    width: 40%;
+
+    position: fixed;
+    top: 17%;
+    left: 35%;
+
+    height: auto;
+
+    background-color: #F6F1F1;
+
+    border-radius: 10px;
+    animation-name: ocultar-form-login;
+    animation-duration: 1s;
+    animation-delay: 0.6s;
+    animation-timing-function: 1;
+    animation-fill-mode: both;
+
+}
+
+@keyframes ocultar-form-login {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
 .div-header-login {
 
     width: 100%;
 
+}
+
+.input-form-login {
+
+    width: 80%;
+    margin-left: 5%;
+
+    color: #605d5d;
+    border: 1px solid #d0cdcd;
+
+    border-radius: 5px;
+
+    outline: 0;
+
+    font-size: 14px;
+    font-weight: normal;
+
+    padding-left: 2%;
 }
 
 .logo-login {
@@ -40,7 +95,7 @@
     text-align: center;
 }
 
-.div-body-login {
+.div-body-login-ativado {
 
     width: 40%;
 
@@ -48,11 +103,34 @@
     top: 17%;
     left: 35%;
 
-    height: 70vh;
+    height: auto;
 
     background-color: #F6F1F1;
 
     border-radius: 10px;
+
+    border-radius: 10px;
+    
+    animation-name: ativar-form-login;
+    animation-duration: 1s;
+    animation-delay: 0.9ms;
+    animation-timing-function: 1;
+    animation-fill-mode: both;
+
+}
+
+@keyframes ativar-form-login {
+ 
+    0%{
+        opacity: 0;
+        display: block;
+    }
+    
+    100% {
+        opacity: 1;
+        display: block;
+    }
+        
 }
 
 .btn-form-login {
@@ -63,4 +141,93 @@
     background-color: #36474F;
     color: white;
     font-weight: bold;
+}
+
+.link-form-login {
+    color: #434343;
+    text-decoration: none;
+    transition-duration: 0.6ms;
+
+}
+
+.link-form-login:hover {
+    color: #434343;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    transition-duration: 0.6s;
+}
+
+.text-header-footer {
+    font-size: 15px;
+    font-weight: lighter;
+}
+
+.btn-redes {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background-color: white;
+    border-radius: 20px;
+    padding: 4px;
+    box-shadow: 1px 1px 4px 1px rgb(157, 156, 156);
+}
+
+.img-redes {
+    width: 20%;
+    height: auto;
+}
+
+
+
+/****** form cadastro    *******/
+
+
+.div-body-cadastro {
+
+    width: 40%;
+
+    position: fixed;
+    top: 17%;
+    left: 35%;
+
+    height: auto;
+
+    background-color: #F6F1F1;
+
+    border-radius: 10px;
+}
+
+.div-body-cadastro-ativado {
+
+    animation-name: ativar-cadastro;
+    animation-duration: 1s;
+    animation-timing-function: 1;
+    animation-delay: 1s;
+    animation-fill-mode: both;
+
+}
+
+@keyframes ativar-cadastro {
+    0%{
+        opacity: 0;
+        display: none;
+    }
+
+    100% {
+        opacity: 1;
+        display: block;
+    }
+}
+
+
+.icon-fechar-form-cadastro:hover {
+    cursor: pointer;
+}
+
+/* texto erros */
+
+.texto-erro-cadastro {
+    font-size: 12px;
 }

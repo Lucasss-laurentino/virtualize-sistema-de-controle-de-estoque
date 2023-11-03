@@ -3,6 +3,8 @@ import { Page_default } from './components/Page_default';
 import { CurrentPageProvider } from './Contexts/CurrentPageContext';
 import { ProdutoProvider } from './Contexts/ProdutoContext';
 import { CategoriaProvider } from './Contexts/CategoriaContext';
+import { ValidarInputCadastroProvider } from './Contexts/ValidarInputCadastroContext';
+import { LoginContextProvider } from './Contexts/LoginContext';
 
 export default function appRoute() {
     
@@ -10,13 +12,17 @@ export default function appRoute() {
         <CurrentPageProvider>
             <ProdutoProvider>
                 <CategoriaProvider>
-                    <Router>
-                        <Routes>
-                            <Route path='/' element={< Page_default />} >
+                    <ValidarInputCadastroProvider>
+                        <LoginContextProvider>
+                            <Router>
+                                <Routes>
+                                    <Route path='/' element={< Page_default />} >
 
-                            </Route>
-                        </Routes>
-                    </Router>
+                                    </Route>
+                                </Routes>
+                            </Router>
+                        </LoginContextProvider>
+                    </ValidarInputCadastroProvider>
                 </CategoriaProvider>
             </ProdutoProvider>
         </CurrentPageProvider>

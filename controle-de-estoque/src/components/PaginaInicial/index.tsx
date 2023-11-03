@@ -79,8 +79,10 @@ export const PaginaInicial = () => {
                 </div>
             </div>
 
-            <div className="grafico">
-                <Line data={data} options={options} />
+            <div className="alinhamento-grafico">
+                <div className="grafico">
+                    <Line data={data} options={options} />
+                </div>
             </div>
 
         </>
