@@ -1,0 +1,13 @@
+.envelop-all {
+    position: relative;
+}
+
+.paginas{
+
+    width: 85%;
+
+    position: absolute;
+
+    top: 12%;
+    left: 15%;
+}

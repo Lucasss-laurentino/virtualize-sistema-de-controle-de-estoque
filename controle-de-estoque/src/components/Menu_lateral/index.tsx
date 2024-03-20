@@ -1,24 +1,25 @@
-import { useContext, useEffect } from 'react';
-import { Apresentacao_dados } from '../Apresentacao_dados';
+import { useContext } from 'react';
 import './index.css';
 import { CurrentPageContext } from '../../Contexts/CurrentPageContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Menu_lateral = () => {
 
-    const { id, changePage } = useContext(CurrentPageContext);
+    const { changePage } = useContext(CurrentPageContext);
+
+    const navigate = useNavigate();
 
     return (
         <>
-            <div className="menu_e_apresentacao_dados">
                 <div className='menu-lateral'>
                     <div className="div-list-items-menu">
                         <ul className="list-menu">
 
-                            <li className="items-menu" onClick={() => changePage('0')} >Página Inicial</li>
+                            <li className="items-menu" onClick={() => navigate('/servicos')}>Página Inicial</li>
 
                             <li className='item-destacado'>Gerenciamento</li>
 
-                            <li className='items-menu' onClick={() => changePage('1')}>
+                            <li className='items-menu' onClick={() => navigate('/produtos')}>
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
                                     preserveAspectRatio="xMidYMid meet">
@@ -83,7 +84,7 @@ export const Menu_lateral = () => {
                             </li>
 
                             <li className='item-destacado'>Movimentação</li>
-                            <li className='items-menu' onClick={() => changePage('4')}>
+                            <li className='items-menu' onClick={() => navigate('/compras')}>
 
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="20" height="20" viewBox="0 0 512.000000 512.000000"
@@ -129,7 +130,7 @@ export const Menu_lateral = () => {
                                 </svg>
                                 <p className='text-items-menu'>Compras</p>
                             </li>
-                            <li className="items-menu" onClick={() => changePage('3')}>
+                            <li className="items-menu" onClick={() => navigate('/vendas')}>
 
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" viewBox="0 0 512.000000 512.000000"
@@ -283,9 +284,6 @@ export const Menu_lateral = () => {
                         </ul>
                     </div>
                 </div>
-
-                <Apresentacao_dados />
-            </div>
 
         </>
     );

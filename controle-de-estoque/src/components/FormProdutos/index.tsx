@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './index.css';
 import { CategoriaContext } from '../../Contexts/CategoriaContext';
 import Categoria from '../../types/Categoria';
@@ -119,12 +119,14 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                         <div className="container d-flex justify-content-center w-100">
                             <div className="container col-10 mt-3 person-row-top-form-produtos">
                                 <div className="row w-100">
+                                    {/* nome */}
                                     <div className="col-8 p-0 mt-2">
                                         <div className="span-input">
                                             <span className='px-4'>Nome</span>
                                             <input className='input-form-produto col-8' value={nomeProduto} onChange={(valor) => setNomeProduto(valor.target.value)} type="text" />
                                         </div>
                                     </div>
+                                    {/* codigo proprio */}
                                     <div className="col-4 p-0 mt-2">
                                         <div className="span-input">
                                             <span className='px-3'>Código Próprio</span>
