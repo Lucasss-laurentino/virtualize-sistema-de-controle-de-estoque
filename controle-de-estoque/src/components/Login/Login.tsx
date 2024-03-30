@@ -10,11 +10,7 @@ export const Login = ({toggle}: Props) => {
 
         <>
             <div className={toggle ? 'page-login-active' : 'page-login'}>
-                <div className="container div-logo-login">
-                    <div className="img">
-                    <img src="../../../img/logo.png" className='img-logo' alt="" />
-                    </div>
-                </div>
+                
             </div>
         </>
 

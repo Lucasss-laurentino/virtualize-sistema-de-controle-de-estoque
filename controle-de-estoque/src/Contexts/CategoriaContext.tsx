@@ -1,11 +1,13 @@
 import { createContext, useState } from "react";
 import Categoria from "../types/Categoria";
+import { http } from "../http/http";
 
 type CategoriaType = {
     categoria: string | undefined,
     encontrarCategoria: (categoriaDigitadaNoInput: string) => void,
     categorias: Categoria[] | undefined,
     categoriaDigitada: Categoria[],
+    pegar_categorias: () => void,
 }
 
 export const CategoriaContext = createContext<CategoriaType>(null!);
@@ -17,16 +19,16 @@ export const CategoriaProvider = ({children}: {children: JSX.Element}) => {
     const [categorias, setCategorias] = useState<Categoria[]>([
         {
             id: '1233',
-            categoria: 'categoria 1'
+            nome: 'categoria 1'
         },
         {
             id: '1232',
-            categoria: 'tetando 2'
+            nome: 'tetando 2'
         },
         
         {
             id: '1231',
-            categoria: 'teste'
+            nome: 'teste'
         },
         
 
@@ -34,13 +36,21 @@ export const CategoriaProvider = ({children}: {children: JSX.Element}) => {
 
     const [categoriaDigitada, setCategoriaDigitada] = useState<Categoria[]>([]);
 
+    const pegar_categorias = () => {
+
+        http.get('/pegar_categorias').then((response) => {
+            //console.log(response.data)
+        })
+
+    }
+
     const encontrarCategoria = (categoriaDigitadaNoInput: string) => {
 
         const arrayTeste: Categoria[] = []
 
         categorias.filter(categoria => {
     
-            if(categoria.categoria.indexOf(categoriaDigitadaNoInput) != -1 && categoria.categoria.indexOf(categoriaDigitadaNoInput) === 0){
+            if(categoria.nome.indexOf(categoriaDigitadaNoInput) != -1 && categoria.nome.indexOf(categoriaDigitadaNoInput) === 0){
                 arrayTeste.push(categoria);
             }
             
@@ -50,7 +60,13 @@ export const CategoriaProvider = ({children}: {children: JSX.Element}) => {
     }
 
     return (
-        <CategoriaContext.Provider value={{ categoria, encontrarCategoria, categorias, categoriaDigitada }}>
+        <CategoriaContext.Provider value={{ 
+            categoria, 
+            encontrarCategoria, 
+            categorias, 
+            categoriaDigitada, 
+            pegar_categorias,
+        }}>
             {children}
         </CategoriaContext.Provider>
     )

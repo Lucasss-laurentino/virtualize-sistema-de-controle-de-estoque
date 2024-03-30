@@ -1,14 +1,21 @@
-import {  useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Login } from '../Login/Login';
 import { Menu_lateral } from '../Menu_lateral';
 import { NavBar } from '../NavBar';
 import './index.css';
 import { PageLogin } from '../PageLogin';
 import { Outlet } from 'react-router-dom';
+import { UserContext } from '../../Contexts/UserContext';
 
 export const Page_default = () => {
 
     const [toggle, setToggle] = useState(false);
+    const { validarToken, usuario } = useContext(UserContext);
+
+
+    useEffect(() => {
+        validarToken();
+    });
 
     return(
         <>
@@ -21,7 +28,9 @@ export const Page_default = () => {
                 </div>
 
                 <Login toggle={toggle} />
+
                 <PageLogin toggle={toggle} setToggle={setToggle} />
+                
             </div>
 
         </>

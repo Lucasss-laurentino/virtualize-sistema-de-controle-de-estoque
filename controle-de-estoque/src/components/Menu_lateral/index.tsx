@@ -15,7 +15,7 @@ export const Menu_lateral = () => {
                     <div className="div-list-items-menu">
                         <ul className="list-menu">
 
-                            <li className="items-menu" onClick={() => navigate('/servicos')}>Página Inicial</li>
+                            <li className="items-menu" onClick={() => navigate('/')}>Página Inicial</li>
 
                             <li className='item-destacado'>Gerenciamento</li>
 

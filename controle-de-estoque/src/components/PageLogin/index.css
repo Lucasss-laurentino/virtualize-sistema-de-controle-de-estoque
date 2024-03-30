@@ -1,5 +1,17 @@
 .page-login-components-none {
     visibility: hidden;
+    width: 100%;
+    height: 98vh;
+
+    position: fixed;
+    top: 0px;
+    right: 0px;
+
+    background-color: white;
+
+    transition-delay: 0.2s;
+
+    z-index: 6;
 }
 
 .page-login-components {
@@ -21,13 +33,37 @@
 
 }
 
+.div-body-login-ativado {
+
+    width: 40%;
+
+    position: fixed;
+    top: 17%;
+    left: 30%;
+
+    height: auto;
+
+    background-color: #F6F1F1;
+
+    border-radius: 10px;
+
+    border-radius: 10px;
+    
+    animation-name: ativar-form-login;
+    animation-duration: 1s;
+    animation-delay: 0.9ms;
+    animation-timing-function: 1;
+    animation-fill-mode: both;
+
+}
+
 .div-body-login-desativado {
 
     width: 40%;
 
     position: fixed;
     top: 17%;
-    left: 35%;
+    left: 30%;
 
     height: auto;
 
@@ -65,8 +101,13 @@
 
 .input-form-login {
 
-    width: 80%;
-    margin-left: 5%;
+    width: 98%;
+    height: auto;
+
+    margin-left: 1%;
+    margin-bottom: 4%;
+
+    padding: 10px;
 
     color: #605d5d;
     border: 1px solid #d0cdcd;
@@ -75,7 +116,7 @@
 
     outline: 0;
 
-    font-size: 14px;
+    font-size: 20px;
     font-weight: normal;
 
     padding-left: 2%;
@@ -95,30 +136,6 @@
     text-align: center;
 }
 
-.div-body-login-ativado {
-
-    width: 40%;
-
-    position: fixed;
-    top: 17%;
-    left: 35%;
-
-    height: auto;
-
-    background-color: #F6F1F1;
-
-    border-radius: 10px;
-
-    border-radius: 10px;
-    
-    animation-name: ativar-form-login;
-    animation-duration: 1s;
-    animation-delay: 0.9ms;
-    animation-timing-function: 1;
-    animation-fill-mode: both;
-
-}
-
 @keyframes ativar-form-login {
  
     0%{
@@ -135,8 +152,9 @@
 
 .btn-form-login {
     width: 100%;
-    padding: 6px;
-    border-radius: 30px;
+
+    padding: 10px;
+    border-radius: 10px;
     border: none;
     background-color: #36474F;
     color: white;
@@ -144,7 +162,9 @@
 }
 
 .link-form-login {
+
     color: #434343;
+    font-size: 1.2rem;
     text-decoration: none;
     transition-duration: 0.6ms;
 
@@ -190,7 +210,7 @@
 
     position: fixed;
     top: 17%;
-    left: 35%;
+    left: 30%;
 
     height: auto;
 

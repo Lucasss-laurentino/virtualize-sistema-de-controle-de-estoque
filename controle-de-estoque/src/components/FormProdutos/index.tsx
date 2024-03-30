@@ -1,17 +1,23 @@
 import { useContext, useEffect, useState } from 'react';
 import './index.css';
-import { CategoriaContext } from '../../Contexts/CategoriaContext';
-import Categoria from '../../types/Categoria';
 import React from 'react';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
 import Produto from '../../types/Produto';
+import { Popup_create } from '../Popup_create';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 interface Props {
     classFormProduto: string,
     setClassFormProduto: React.Dispatch<React.SetStateAction<string>>,
 }
 
-export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
+const schema = yup.object({
+    categoria: yup.string().required('Campo obrigatório'),
+});
+
+export const FormProduto = ({ classFormProduto, setClassFormProduto }: Props) => {
 
     const [nomeProduto, setNomeProduto] = useState('');
     const [codigoProprio, setCodigoProprio] = useState('');
@@ -21,43 +27,45 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
     const [precoDeVenda, setPrecoDeVenda] = useState('');
     const [estoqueAtual, setEstoqueAtual] = useState('');
     const [estoqueMinimo, setEstoqueMinimo] = useState('');
+    const [itemDigitado, setItemDigitado] = useState('');
+    const [renderPopup, setRenderPopup] = useState(false);
 
-    const { encontrarCategoria, categoriaDigitada } = useContext(CategoriaContext);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm({
+        resolver: yupResolver(schema)
+      })
 
-    const [categoriaLista, setCategoriaLista] = useState<Categoria[]>([]);
+    const [categorias, setCategorias] = useState([
+        {
+            id: '1',
+            nome: 'categoria 1',
+        },
+        {
+            id: '2',
+            nome: 'ategoria 2',
+        },
+        {
+            id: '3',
+            nome: 'bategoria 3',
+        },
 
-    const [classListaCategoria, setClassListaCategoria] = useState('lista-categoria-digitada-none col-12');
-
-    const [classInputSelect, setClassInputSelect] = useState('input-form-categoria col-12 m-0');
+    ])
 
     const { criarProduto } = useContext(ProdutoContext)
 
     useEffect(() => {
-
-        encontrarCategoria(categoria)
-
-        console.log(categoria)
-
-    }, [categoria])
-
-    useEffect(() => {
-
-        setCategoriaLista([...categoriaDigitada])
-
-    }, [categoriaDigitada])
     
-
+        setItemDigitado(watch('categoria'));
+    
+        }, [watch('categoria')])
+    
 
     const closeForm = () => {
         setClassFormProduto('div-form-produtos-none');
-    }
-
-    const setarCategoriaEocultarLista = (categoria: string) => {
-
-        setCategoria(categoria);
-        setClassListaCategoria('lista-categoria-digitada-none col-12')
-        setClassInputSelect('input-form-categoria col-12 m-0') 
-    
     }
 
     const limparFormEcadastrar = () => {
@@ -86,8 +94,8 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
         setPrecoDeCusto('');
         setPrecoDeVenda('');
         setEstoqueAtual('');
-        setEstoqueMinimo('');    
-        
+        setEstoqueMinimo('');
+
     }
 
     return (
@@ -143,45 +151,14 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                     <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
                                                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
                                                 </svg>
-                                                <div className="col-10 position-relative">
-                                                    <input className={classInputSelect} type="text" 
-                                                        onFocus={() => { 
-                                                            setClassListaCategoria('lista-categoria-digitada col-12')
-                                                            setClassInputSelect('input-form-categoria col-12 m-0 border-select-input') 
-                                                        }}
-                                                        value={categoria}
-                                                        onChange={(e) => setCategoria(e.target.value)}
+                                                <div className="container position-relative">
+                                                    <input className='input-form-categoria col-12 m-0' type="text"
+                                                    
+                                                        onFocus={() => {
+                                                            setRenderPopup(true)
+                                                        }}  
+                                                        {...register('categoria')}
                                                     />
-                                                    <div className="col-12">
-                                                        <ul className={classListaCategoria}>
-                                                            {categoriaLista.map((catList)=> {
-                                                                return(
-                                                                    <li key={catList.id} className='item-lista-categoria' onClick={() => setarCategoriaEocultarLista(catList.categoria)}>{catList.categoria}</li>
-                                                                )
-                                                            })}
-
-                                                            {categoriaLista.length < 1 &&
-                                                            
-                                                                <li className='item-lista-categoria'>
-                                                                    <div className="d-flex justify-content-start align-items-center">
-                                                                        <div className="svg">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#605d5d" className="bi bi-plus-square" viewBox="0 0 16 16">
-                                                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                                                            </svg>
-                                                                        </div>
-                                                                        <div className="cadastrar-p m-0 px-1">Cadastrar</div>
-                                                                        <p className='m-0 px-1'>"{categoria}"</p>
-                                                                    </div>
-                                                                    <p className="m-0 px-1 texto-pequeno">
-                                                                        Clique para cadastrar
-                                                                    </p>
-                                                                </li>
-                                                            
-                                                            }
-
-                                                        </ul>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +201,7 @@ export const FormProduto = ({classFormProduto, setClassFormProduto}: Props) => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605d5d" className="bi bi-currency-dollar col-1" viewBox="0 0 16 16">
                                                     <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
                                                 </svg>
-                                                <input className='input-form-produto col-7 m-0' value={precoDeVenda} onChange={(valor) => setPrecoDeVenda(valor.target.value)}  type="text" />
+                                                <input className='input-form-produto col-7 m-0' value={precoDeVenda} onChange={(valor) => setPrecoDeVenda(valor.target.value)} type="text" />
                                             </div>
                                         </div>
                                     </div>

@@ -1,15 +1,58 @@
+import { useContext, useEffect, useState } from 'react';
+import { Tabela_produtos } from '../Tabela_produtos';
 import './index.css';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { Popup_create } from '../Popup_create';
+import { FornecedorContext } from '../../Contexts/FornecedorContext';
 
 interface Props {
     classFormCompras: string,
     setClassFormCompras: React.Dispatch<React.SetStateAction<string>>,
 }
 
+const schema = yup.object({
+    nome_fornecedor: yup.string().required('Campo obrigatório'),
+});
+
 export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) => {
+    
+    const [renderPopup, setRenderPopup] = useState(false);
+    const [itemDigitado, setItemDigitado] = useState('');
+
+    const { fornecedores, buscar_fornecedores } = useContext(FornecedorContext);
 
     const closeFormVendas = () => {
         setClassFormCompras('div-form-compras-none');
     }
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm({
+        resolver: yupResolver(schema)
+      })
+        
+   const delay_fechar_popup = () => { // função de delay pro click funcionar quando desfocar input e fechar popup
+
+        setTimeout(() => {
+            setRenderPopup(false)
+        }, 200)
+
+   }
+
+   useEffect(() => {
+    
+        setItemDigitado(watch('nome_fornecedor'));
+
+    }, [watch('nome_fornecedor')])
+
+    useEffect(() => {
+        buscar_fornecedores()
+    })
 
     return (
 
@@ -34,18 +77,33 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#605d5d" className="bi bi-person-fill " viewBox="0 0 16 16">
                                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                                     </svg>
-                                    <input className='input-form-produto col-11 m-0 mx-2' type="text" />
+                                    <div className="container position-relative">
+                                        <input 
+                                            className='input-form-produto col-12 m-0' 
+                                            type="text"
+                                            {...register('nome_fornecedor')}
+                                            onFocus={() => {
+                                                setRenderPopup(true)
+                                            }}
+                                            onBlur={() => {
+                                                delay_fechar_popup();
+                                            }}
+                                        />
+                                        {/* dentro de popup_create e feito o cadastro desse input */}
+                                        <Popup_create n_form={1} renderPopup={renderPopup} itemDigitado={itemDigitado} itens={fornecedores} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                     <div className="comprasDados d-flex justify-content-center align-items-center div-form-body mt-4 container">
                         <div className="col-11 d-flex py-4">
                             <div className="col-6 bloco">
                                 <h6 className='color-title px-4 pt-3'>Dados da Compra</h6>
                                 <div className="input-icon-form">
-                                    <div className="span-input mx-2 my-2">
-                                        <span className='px-3'>Data</span>
+                                    <div className="span-input mx-2 my-3">
+                                        <span className='px-3'>Data da compra</span>
                                         <div className="span-icon-input d-flex align-items-center m-0 px-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#605d5d" className="bi bi-calendar4-week" viewBox="0 0 16 16">
                                                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
@@ -56,11 +114,12 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                     </div>
                                 </div>
                                 <div className="input-icon-form">
-                                    <div className="span-input mx-2 my-2">
+                                    <div className="span-input mx-2 my-3">
                                         <span className='px-3'>Número da nota</span>
                                         <div className="span-icon-input d-flex align-items-center m-0 px-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="#605d5d" className="bi bi-list" viewBox="0 0 16 16">
-                                                <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-list-ol" viewBox="0 0 16 16">
+                                                <path fillRule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5"/>
+                                                <path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635z"/>
                                             </svg>
                                             <input className='input-form-produto col-10 m-0 mx-2' type="text" />
                                         </div>
@@ -81,64 +140,14 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                             </div>
                         </div>
                     </div>
+
+
                     <div className="div-form-body mt-4 container d-flex justify-content-center align-items-center">
                         <div className="col-11 bloco pt-2">
                             <div className="title-row mb-3">
                                 <h6 className='px-3 color-title'>Produtos</h6>
                             </div>
-                            <div className="header-row d-flex pl-3">
-                                <div className="col-3 color-title title-table pad "><p className='p-title'>Nome do produto</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Custo unitário</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Quant.</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Desconto</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Outros custos</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Custos externos</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>IPI</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Subst. Trib.</p></div>
-                                <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Total</p></div>
-                            </div>
-                            <div className="body-row d-flex pl-3">
-                                <div className="span-input col-3">
-                                    <div className="span-icon-input d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box" viewBox="0 0 16 16">
-                                            <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
-                                        </svg>
-                                        <input className='input-form-produto col-10 mx-1 my-3' type="text" placeholder='' />
-                                    </div>
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" />
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number"  placeholder='R$'/>
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
-                                </div>
-                                <div className="col-1 color-title title-table">
-                                    <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
-                                </div>
-                                <div className="col-1 color-title title-table pad">
-                                    <p className='m-0 color-title'>R$ 0.00</p>
-                                </div>
-                                <div className="col-1 color-title pad title-table">
-                                    <button className='btn-trash '>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#ffff" className="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                            <Tabela_produtos />
                             <div className="footer-row d-flex align-items-center justify-content-between py-3">
                                 <div className="title-row ">
                                     <h6 className='px-3 color-title m-0'>Total</h6>

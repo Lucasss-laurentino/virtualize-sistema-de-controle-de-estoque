@@ -1,9 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { http } from "../http/http";
+import { UserContext } from "./UserContext";
 
 type LoginType = {
     usuarioLogado: boolean,
-    criarUsuario: (nome: string, email: string, nomeDaEmpresa: string, senha: string) => void,
+    criarUsuario: (data: any) => void,
     login: (email: string, senha: string) => void,
     logout: () => void,
 }
@@ -14,19 +15,19 @@ export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
 
     const [usuarioLogado, setUsuarioLogado] = useState<boolean>(false);
 
-    const criarUsuario = (nome: string, email: string, nomeDaEmpresa: string, senha: string) => {
+    const { setUsuario } = useContext(UserContext);
+    
+    const criarUsuario = (data: any) => {
         
-        http.post('/criar_usuario', {nome, email, nomeDaEmpresa, senha}).then((response) => {
-            
-            localStorage.setItem('token', response.data.token);
+        http.post('/cadastrar_usuario', {data}).then((response) => {
 
-            if(response.data.token){
-                setUsuarioLogado(true);
-            }
-            
-        
+            localStorage.setItem('user', response.data.user)
+            setUsuario(response.data.user);   
+
         }).catch((response) => {
-            console.log(response.data)
+
+            console.log(response.response);
+
         })
 
     }
@@ -36,8 +37,10 @@ export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
         http.post('/login', {email, senha}).then((response) => {
         
             localStorage.setItem('token', response.data.token);
+            
             setUsuarioLogado(true);
-            console.log(response.data.token);
+
+            console.log(response.data);
         
         }).catch((response) => {
 

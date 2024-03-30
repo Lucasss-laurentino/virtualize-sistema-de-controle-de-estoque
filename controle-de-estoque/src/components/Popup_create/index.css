@@ -1,0 +1,39 @@
+.lista-item-digitado {
+
+    width: 80%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #35A398;
+    border-top: none;
+    animation: open 0.2s ease-in 0.7s 0.7 alternate backwards;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.hover-block:hover {
+    
+}
+
+.hov:hover {
+    cursor: pointer;
+}
+
+.criar-item {
+
+    width: 80%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #35A398;
+    border-top: none;
+    animation: open 0.1ms ease-in 0.1ms 0.7 alternate backwards;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

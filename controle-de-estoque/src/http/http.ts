@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 export const http = axios.create({
-    baseURL: 'http://127.0.0.1:8000/',
+    baseURL: 'http://localhost:8000/',
     headers: {
         Accept: 'appication-json',
         Content: 'application-json',
-    }
+    },
+    withCredentials: true
 }) 
 
 // Adiciona um interceptador na requisição

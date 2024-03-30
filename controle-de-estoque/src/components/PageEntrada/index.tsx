@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormCompras } from '../FormCompras';
 import './index.css';
+import { CategoriaContext } from '../../Contexts/CategoriaContext';
 
 export const PageEntrada = () => {
 
     const [classFormCompras, setClassFormCompras] = useState('div-form-compras-none');
+
+    const { pegar_categorias } = useContext(CategoriaContext);
+
+    useEffect(() => {
+        pegar_categorias()
+    })
 
     return (
         <>
