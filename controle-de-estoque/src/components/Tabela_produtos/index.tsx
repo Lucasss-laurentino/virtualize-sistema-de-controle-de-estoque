@@ -1,6 +1,39 @@
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import './index.css';
+import { useEffect, useState } from 'react';
+
+const schema = yup.object({
+    nome_produto: yup.string().required('Campo obrigatório'),
+})
 
 export const Tabela_produtos = () => {
+
+    const [renderPopup, setRenderPopup] = useState(false);
+    const [itemDigitado, setItemDigitado] = useState('');
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors },
+      } = useForm({
+        resolver: yupResolver(schema)
+      })
+
+    const delay_fechar_popup = () => { // função de delay pro click funcionar quando desfocar input e fechar popup
+
+        setTimeout(() => {
+            setRenderPopup(false)
+        }, 200)
+
+    }
+
+    useEffect(() => {
+        setItemDigitado(watch('nome_produto'));
+    }, [watch('nome_produto')])
 
     return (
 
@@ -21,7 +54,18 @@ export const Tabela_produtos = () => {
                         <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                             <p className='txt-compras'>Nome do produto</p>
                         </div>
-                        <input className='col-10 col-md-11 input-form-produto mx-1 my-3' type="text" placeholder='' />
+                        <input 
+                            className='col-10 col-md-11 input-form-produto mx-1 my-3' 
+                            type="text" 
+                            placeholder='' 
+                            {...register('nome_produto')}
+                            onFocus={() => {
+                                setRenderPopup(true)
+                            }}
+                            onBlur={() => {
+                                delay_fechar_popup();
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="span-input col-12 col-md-2">

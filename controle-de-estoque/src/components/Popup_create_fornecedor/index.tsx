@@ -8,9 +8,10 @@ import React from 'react';
 interface Props {
     renderPopup: boolean,
     itemDigitado: string,
+    setValue: any,
 }
 
-export const Popup_create_fornecedor = ({ renderPopup, itemDigitado }: Props) => {
+export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue }: Props) => {
 
     const {
         fornecedores,
@@ -60,7 +61,7 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado }: Props) =>
                         {fornecedoresPopUp?.map((fornecedor) => {
                             return (
 
-                                <li key={fornecedor._id} className='item-lista-categoria'>{fornecedor.nome}</li>
+                                <li key={fornecedor._id} className='item-lista-categoria' onClick={() => setValue('nome_fornecedor', fornecedor.nome)}>{fornecedor.nome}</li>
 
                             )
                         })}
