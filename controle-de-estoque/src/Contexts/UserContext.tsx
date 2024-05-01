@@ -1,6 +1,7 @@
 import { SetStateAction, createContext, useState } from "react";
 import Usuario from "../types/Usuario";
 import { http } from "../http/http";
+import { jwtDecode } from "jwt-decode";
 
 type UserType = {
 
@@ -16,13 +17,11 @@ export const UserProvider = ({children}: {children: JSX.Element}) => {
     const [usuario, setUsuario] = useState<Usuario | null>(null);
 
     const validarToken = () => {
-        
-        http.post('/validar_token').then((response) => {
-    
-            setUsuario(response.data.user)
-    
-        }).catch((response) => {
 
+        http.post('/validar_token').then((response) => {
+            setUsuario(response.data.usuario);
+        }).catch((response) => {
+            setUsuario(null);
         })
     
     }

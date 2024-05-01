@@ -4,7 +4,7 @@ import './index.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Popup_create } from '../Popup_create';
+import { Popup_create_fornecedor } from '../Popup_create_fornecedor';
 import { FornecedorContext } from '../../Contexts/FornecedorContext';
 
 interface Props {
@@ -21,7 +21,7 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
     const [renderPopup, setRenderPopup] = useState(false);
     const [itemDigitado, setItemDigitado] = useState('');
 
-    const { fornecedores, buscar_fornecedores } = useContext(FornecedorContext);
+    const { pegar_fornecedores } = useContext(FornecedorContext);
 
     const closeFormVendas = () => {
         setClassFormCompras('div-form-compras-none');
@@ -48,11 +48,7 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
     
         setItemDigitado(watch('nome_fornecedor'));
 
-    }, [watch('nome_fornecedor')])
-
-    useEffect(() => {
-        buscar_fornecedores()
-    })
+    }, [watch('nome_fornecedor')]);
 
     return (
 
@@ -68,9 +64,10 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
 
                 </div>
 
-                <form action="">
+                <form action="" onSubmit={handleSubmit(() => {console.log('submited')})}>
                     <div className="div-form-body mt-4 container d-flex justify-content-center align-items-center">
                         <div className="col-11 bloco d-flex py-4">
+
                             <div className="span-input col-10">
                                 <span className='px-3'>Nome do Fornecedor</span>
                                 <div className="span-icon-input d-flex align-items-center m-0 px-3">
@@ -90,10 +87,12 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                             }}
                                         />
                                         {/* dentro de popup_create e feito o cadastro desse input */}
-                                        <Popup_create n_form={1} renderPopup={renderPopup} itemDigitado={itemDigitado} itens={fornecedores} />
+                                        <Popup_create_fornecedor renderPopup={renderPopup} itemDigitado={itemDigitado}/>
+                                        {errors.nome_fornecedor && <p className="m-0 text-danger mt-1 texto-erro-cadastro">{errors.nome_fornecedor.message}</p> }
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     

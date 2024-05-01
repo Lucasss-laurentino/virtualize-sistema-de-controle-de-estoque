@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FormCompras } from '../FormCompras';
 import './index.css';
 import { CategoriaContext } from '../../Contexts/CategoriaContext';
+import { FornecedorContext } from '../../Contexts/FornecedorContext';
 
 export const PageEntrada = () => {
 
@@ -10,8 +11,9 @@ export const PageEntrada = () => {
     const { pegar_categorias } = useContext(CategoriaContext);
 
     useEffect(() => {
-        pegar_categorias()
+       // pegar_categorias()
     })
+
 
     return (
         <>
@@ -136,7 +138,9 @@ export const PageEntrada = () => {
                 </table>
             </div>
 
+            {
             <FormCompras classFormCompras={classFormCompras} setClassFormCompras={setClassFormCompras} />
+            }
 
             </div>
 

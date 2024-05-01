@@ -6,8 +6,10 @@ type FornecedorType = {
 
     fornecedores: IFornecedor[],
     setFornecedores: React.Dispatch<SetStateAction<IFornecedor[]>>,
-    buscar_fornecedores: () => void,
+    pegar_fornecedores: () => void,
     criar_fornecedor: (itemDigitado: string) => void,
+    fornecedoresPopUp: IFornecedor[]
+    setFornecedoresPopUp: React.Dispatch<SetStateAction<IFornecedor[]>>,
 }
 
 export const FornecedorContext = createContext<FornecedorType>(null!);
@@ -15,12 +17,16 @@ export const FornecedorContext = createContext<FornecedorType>(null!);
 export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
 
     const [fornecedores, setFornecedores] = useState<IFornecedor[]>([]);
+    const [fornecedoresPopUp, setFornecedoresPopUp] = useState<IFornecedor[]>([]);
 
-    const buscar_fornecedores = () => {
+    const pegar_fornecedores = () => {
 
-        http.post('/buscar_fornecedores').then((response) => {
+        
+        http.get('/pegar_fornecedores').then((response) => {
+            setFornecedoresPopUp([...response.data.fornecedores])
             setFornecedores([...response.data.fornecedores]);
         })
+        
 
     }
 
@@ -29,7 +35,9 @@ export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
         const nome = itemDigitado;
 
         http.post('/criar_fornecedor', {nome}).then((response) => {
-            setFornecedores([...response.data.fornecedores]);
+            console.log(response.data);
+            setFornecedoresPopUp([...fornecedoresPopUp, response.data.novo_fornecedor])
+            setFornecedores([...fornecedores, response.data.novo_fornecedor]);
         })
 
     }
@@ -39,8 +47,10 @@ export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
         <FornecedorContext.Provider value={{
             fornecedores, 
             setFornecedores,
-            buscar_fornecedores,
+            pegar_fornecedores,
             criar_fornecedor,    
+            fornecedoresPopUp,
+            setFornecedoresPopUp
         }}>
             {children}
         </FornecedorContext.Provider>

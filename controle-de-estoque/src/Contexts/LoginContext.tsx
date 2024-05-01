@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { http } from "../http/http";
 import { UserContext } from "./UserContext";
+import { jwtDecode } from "jwt-decode";
 
 type LoginType = {
     usuarioLogado: boolean,
@@ -14,15 +15,15 @@ export const LoginContext = createContext<LoginType>(null!);
 export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
 
     const [usuarioLogado, setUsuarioLogado] = useState<boolean>(false);
-
     const { setUsuario } = useContext(UserContext);
-    
+
     const criarUsuario = (data: any) => {
         
         http.post('/cadastrar_usuario', {data}).then((response) => {
-
-            localStorage.setItem('user', response.data.user)
-            setUsuario(response.data.user);   
+            const token = response.data.token;
+            setUsuario(jwtDecode(token));
+            setUsuarioLogado(true);
+            localStorage.setItem('token', token);
 
         }).catch((response) => {
 

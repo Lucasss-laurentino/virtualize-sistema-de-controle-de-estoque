@@ -5,8 +5,10 @@
 .paginas{
 
     width: 85%;
-
+    height: auto;
     position: absolute;
+
+    overflow-y: auto;
 
     top: 12%;
     left: 15%;

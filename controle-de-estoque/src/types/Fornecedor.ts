@@ -1,4 +1,4 @@
 export default interface IFornecedor {
-    id: string,
+    _id: string,
     nome: string,
 }

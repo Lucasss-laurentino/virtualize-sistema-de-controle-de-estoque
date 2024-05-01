@@ -5,10 +5,19 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 
 import { CategoryScale, Title } from 'chart.js';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 ChartJs.register(CategoryScale, Title);
 
 
 export const PaginaInicial = () => {
+
+    const { usuario } = useContext(UserContext);
+
+    useEffect(() => {
+
+
+    }, [usuario])
 
     const data = {
         labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
@@ -41,7 +50,6 @@ export const PaginaInicial = () => {
         },
         responsive: true,
     }
-
 
     return (
         <>

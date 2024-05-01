@@ -3,7 +3,6 @@ import './index.css';
 import React from 'react';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
 import Produto from '../../types/Produto';
-import { Popup_create } from '../Popup_create';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
