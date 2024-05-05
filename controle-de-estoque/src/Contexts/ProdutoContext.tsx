@@ -18,7 +18,19 @@ export const ProdutoProvider = ({children}: {children: JSX.Element}) => {
     const [produtos, setProdutos] = useState<Produto[]>([
 
         {
-            id: '0',
+            _id: '0',
+            nome: 'Produto 0',
+            codigo_proprio: 'produto 1',
+            categoria: 'categoria 1',
+            palavra_chave: 'chaveProduto1',
+            preco_de_custo: '100, 00',
+            preco_de_venda: '199,90',
+            estoque_atual: '25',
+            estoque_minimo: '5',
+            total: '2000.00',
+        },
+        {
+            _id: '1',
             nome: 'Produto 1',
             codigo_proprio: 'produto 1',
             categoria: 'categoria 1',
@@ -30,19 +42,7 @@ export const ProdutoProvider = ({children}: {children: JSX.Element}) => {
             total: '2000.00',
         },
         {
-            id: '1',
-            nome: 'Produto 1',
-            codigo_proprio: 'produto 1',
-            categoria: 'categoria 1',
-            palavra_chave: 'chaveProduto1',
-            preco_de_custo: '100, 00',
-            preco_de_venda: '199,90',
-            estoque_atual: '25',
-            estoque_minimo: '5',
-            total: '2000.00',
-        },
-        {
-            id: '2',
+            _id: '2',
             nome: 'Produto 2',
             codigo_proprio: 'produto 2',
             categoria: 'categoria 2',
@@ -54,7 +54,7 @@ export const ProdutoProvider = ({children}: {children: JSX.Element}) => {
             total: '2000.00',
         },
         {
-            id: '3',
+            _id: '3',
             nome: 'Produto 3',
             codigo_proprio: 'produto 3',
             categoria: 'categoria 3',
@@ -66,7 +66,7 @@ export const ProdutoProvider = ({children}: {children: JSX.Element}) => {
             total: '2000.00',
         },
         {
-            id: '4',
+            _id: '4',
             nome: 'Produto 4',
             codigo_proprio: 'produto 4',
             categoria: 'categoria 4',

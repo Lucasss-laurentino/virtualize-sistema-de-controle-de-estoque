@@ -218,19 +218,6 @@
 
     padding-left: 2%;
 }
-
-.item-lista-categoria {
-    color: #605d5d;
-    font-size: 14px;
-    padding: 4px;
-    overflow-x: auto;
-}
-
-.item-lista-categoria:hover {
-    cursor: pointer;
-    background-color: #FDF8D8;
-}
-
 .texto-pequeno {
     font-size: 12px;
 }

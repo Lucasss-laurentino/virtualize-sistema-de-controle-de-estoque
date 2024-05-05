@@ -120,8 +120,8 @@ export const PaginaProdutos = () => {
                         <tbody>
                             {produtos.map((produto) => {
                                 return (
-                                    <tr key={produto.id}>
-                                        <th className='cor'>{produto.id}</th>
+                                    <tr key={produto._id}>
+                                        <th className='cor'>{produto._id}</th>
                                         <td className='cor'>{produto.nome}</td>
                                         <td className='cor'>{produto.categoria}</td>
                                         <td className='cor'>{produto.preco_de_custo}</td>

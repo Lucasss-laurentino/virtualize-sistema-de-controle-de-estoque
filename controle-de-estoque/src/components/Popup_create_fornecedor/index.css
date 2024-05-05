@@ -1,50 +1,92 @@
-.lista-item-digitado {
+.popup-fornecedor {
 
-    width: 80%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: absolute;
-    background-color: white;
-    border: 1px solid #35A398;
+    width: 35%;
+
     border-top: none;
-    animation: open 0.2s ease-in 0.7s 0.7 alternate backwards;
+    border-right: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid rgb(216, 216, 216);
+    border-left: 1px solid rgb(216, 216, 216);
 
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+
+    background-color: white;
+
+    position: absolute;
+
 }
 
-.hover-block:hover {
-    
+.popup-produto {
+
+    width: 87%;
+
+    margin-left: 2%;
+
+    border-top: none;
+    border-right: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid rgb(216, 216, 216);
+    border-left: 1px solid rgb(216, 216, 216);
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    background-color: white;
+
+    position: absolute;
+
 }
 
-.hov:hover {
+.lista-item {
+
+    width: 100%;
+
+    max-height: 12vh;
+
+    padding: 2%;
+
+    margin-bottom: 1%;
+
+    list-style: none ;
+
+    overflow-y: auto;
+}
+
+.item-lista {
+
+    color: #605d5d;
+
+    padding-left: 1%;
+    border-bottom: 1px solid rgb(238, 236, 236);
+
+}
+
+.item-lista:hover {
+
     cursor: pointer;
+
+    background-color: beige;
+
 }
+
 
 .criar-item {
 
-    width: 80%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: absolute;
-    background-color: white;
-    border: 1px solid #35A398;
-    border-top: none;
-    animation: open 0.1ms ease-in 0.1ms 0.7 alternate backwards;
-
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.custom-btn-adc-f {
-    width: 50%;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+
+    flex-direction: column;
+
+    border-top: 1px solid #e7e7e7;
+
+
 }
 
-.cadastrar-p2 {
-    font-size: 13px;
+.criar-item:hover {
+    cursor: pointer;
 }
+
+.texto-cadastrar {
+    color: #605d5d;
+}
+

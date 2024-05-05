@@ -1,5 +1,5 @@
-export default interface Produto {
-    id: string,
+export default interface IProduto {
+    _id: string,
     nome: string,
     codigo_proprio: string,
     categoria: string,

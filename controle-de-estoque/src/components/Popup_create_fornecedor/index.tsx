@@ -1,52 +1,85 @@
-import { useContext, useEffect, useState } from 'react';
-import Categoria from '../../types/Categoria';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import IFornecedor from '../../types/Fornecedor';
 import './index.css';
 import { FornecedorContext } from '../../Contexts/FornecedorContext';
 import React from 'react';
+import { ProdutoContext } from '../../Contexts/ProdutoContext';
+import IProduto from '../../types/Produto';
 
 interface Props {
     renderPopup: boolean,
     itemDigitado: string,
     setValue: any,
+    itensPopup: IFornecedor[],
+    setItensPopup: React.Dispatch<SetStateAction<IFornecedor[] | IProduto[]>>,
+    Nfunc: number,
 }
 
-export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue }: Props) => {
+export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc }: Props) => {
 
     const {
         fornecedores,
         criar_fornecedor,
         pegar_fornecedores,
         fornecedoresPopUp,
-        setFornecedoresPopUp } = useContext(FornecedorContext);
+    } = useContext(FornecedorContext);
 
-    const [gatilho_form_fornecedor_lista, setGatilho_form_fornecedor_lista] = useState(false);
+    const { produtos } = useContext(ProdutoContext);
 
-    useEffect(() => {
-
-        pegar_fornecedores();
-
-    }, [])
+    const [gatilho_form_item_lista, setGatilho_form_item_lista] = useState(false);
 
     useEffect(() => {
 
-        let arrayFornecedores: IFornecedor[] = [];
+        Nfunc == 1 && setItensPopup([...fornecedores])
+        Nfunc == 2 && setItensPopup([...produtos]);
 
-        fornecedores?.filter(fornecedor => { // pegar fornecedores que sao iguais ao 'itemDigitado'
+    }, [fornecedores])
 
-            if (fornecedor.nome.indexOf(itemDigitado) != -1 && fornecedor.nome.indexOf(itemDigitado) === 0) {
-                arrayFornecedores.push(fornecedor);
-            }
+    useEffect(() => {
 
-            if (fornecedor.nome === itemDigitado) {
-                setGatilho_form_fornecedor_lista(true);
-            } else {
-                setGatilho_form_fornecedor_lista(false);
-            }
+        if (Nfunc === 1) {
 
-        })
+            let arrayFornecedores: IFornecedor[] = [];
 
-        setFornecedoresPopUp([...arrayFornecedores]); // setando fornecedores apenas com fornecedores de acordo com o 'itemDigitado'
+            fornecedores?.filter(fornecedor => { // pegar fornecedores que sao iguais ao 'itemDigitado'
+
+                if (fornecedor.nome.indexOf(itemDigitado) != -1 && fornecedor.nome.indexOf(itemDigitado) === 0) {
+                    arrayFornecedores.push(fornecedor);
+                }
+
+                if (fornecedor.nome === itemDigitado) {
+                    setGatilho_form_item_lista(true);
+                } else {
+                    setGatilho_form_item_lista(false);
+                }
+
+            })
+
+            setItensPopup([...arrayFornecedores]); // setando fornecedores apenas com fornecedores de acordo com o 'itemDigitado'    
+
+        }
+
+        if (Nfunc === 2) {
+
+            let arrayProdutos: IProduto[] = [];
+
+            produtos?.filter(produto => { // pegar fornecedores que sao iguais ao 'itemDigitado'
+
+                if (produto.nome.indexOf(itemDigitado) != -1 && produto.nome.indexOf(itemDigitado) === 0) {
+                    arrayProdutos.push(produto);
+                }
+
+                if (produto.nome === itemDigitado) {
+                    setGatilho_form_item_lista(true);
+                } else {
+                    setGatilho_form_item_lista(false);
+                }
+
+            })
+
+            setItensPopup([...arrayProdutos]); // setando fornecedores apenas com fornecedores de acordo com o 'itemDigitado'    
+
+        }
 
     }, [itemDigitado])
 
@@ -56,69 +89,44 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue }:
 
             {renderPopup &&
 
-                <div className="container position-absolute p-0 hover-block">
-                    <ul className="lista-item-digitado">
-                        {fornecedoresPopUp?.map((fornecedor) => {
-                            return (
+                <>
+                    <div className={Nfunc == 1 ? "popup-fornecedor" : "popup-produto"}>
+                        <ul className="lista-item">
+                            {itensPopup?.map((item) => {
+                                return (
 
-                                <li key={fornecedor._id} className='item-lista-categoria' onClick={() => setValue('nome_fornecedor', fornecedor.nome)}>{fornecedor.nome}</li>
+                                    <li key={item._id} className='item-lista' onClick={() => setValue('nome_fornecedor', item.nome)}>{item.nome}</li>
 
-                            )
-                        })}
+                                )
+                            })}
+                        </ul>
 
-                        {itemDigitado != "" && !gatilho_form_fornecedor_lista &&
+                        {!gatilho_form_item_lista &&
 
                             <>
-                                <div className="container d-flex justify-content-center align-itens-center">
-                                    <div className="hov mt-1 mb-1 custom-btn-adc-f" onClick={() => {
-
-                                        criar_fornecedor(itemDigitado)
-
-                                    }}>
-                                        <div className="svg px-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#605d5d" className="bi bi-plus-square" viewBox="0 0 16 16">
-                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                            </svg>
-                                        </div>
-                                        <div className="cadastrar-p2 m-0 px-1">Cadastrar</div>
-                                    </div>
-
-                                </div>
-                                <div className="d-flex justify-content-center align-items-center">
-                                    <p className="m-0 pb-2 texto-pequeno">toque para cadastrar '{itemDigitado}'</p>
-                                </div>
-                            </>
-                        }
-
-                    </ul>
-
-                    {fornecedoresPopUp.length < 1 &&
-
-
-                        <>
-
-                            <div className={itemDigitado === "" ? "d-none" : "criar-item px-3 pt-2"}>
-                                <div className="d-flex justify-content-start align-items-center hov" onClick={() => {
+                                <div className={itemDigitado === "" ? "d-none" : "criar-item"} onClick={() => {
 
                                     criar_fornecedor(itemDigitado)
 
                                 }}>
-                                    <div className="svg px-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#605d5d" className="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                        </svg>
+                                    <div className="d-flex justify-content-start align-items-center pt-2">
+                                        <div className="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" fill="#605d5d" className="bi bi-plus-square" viewBox="0 0 16 16">
+                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                            </svg>
+                                        </div>
+                                        <div className="texto-cadastrar m-0 px-1 ">Cadastrar</div>
                                     </div>
-                                    <div className="cadastrar-p m-0 px-1">Cadastrar</div>
+                                    <p className="texto-pequeno px-1">toque para cadastrar '{itemDigitado}'</p>
                                 </div>
-                                <p className="m-0 px-2 py-1 texto-pequeno">toque para cadastrar '{itemDigitado}'</p>
-                            </div>
-                        </>
+                            </>
 
+                        }
 
-                    }
-                </div>
+                    </div>
+
+                </>
 
             }
 

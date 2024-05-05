@@ -6,6 +6,7 @@ import Produto from '../../types/Produto';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import IProduto from '../../types/Produto';
 
 interface Props {
     classFormProduto: string,
@@ -69,9 +70,9 @@ export const FormProduto = ({ classFormProduto, setClassFormProduto }: Props) =>
 
     const limparFormEcadastrar = () => {
 
-        const produto: Produto = {
+        const produto: IProduto = {
 
-            id: '',
+            _id: '',
             nome: nomeProduto,
             codigo_proprio: codigoProprio,
             categoria,

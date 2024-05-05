@@ -3,6 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import './index.css';
 import { useEffect, useState } from 'react';
+import { Popup_create_fornecedor } from '../Popup_create_fornecedor';
+import IProduto from '../../types/Produto';
+import IFornecedor from '../../types/Fornecedor';
 
 const schema = yup.object({
     nome_produto: yup.string().required('Campo obrigatório'),
@@ -12,6 +15,7 @@ export const Tabela_produtos = () => {
 
     const [renderPopup, setRenderPopup] = useState(false);
     const [itemDigitado, setItemDigitado] = useState('');
+    const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
 
     const {
         register,
@@ -25,6 +29,8 @@ export const Tabela_produtos = () => {
 
     const delay_fechar_popup = () => { // função de delay pro click funcionar quando desfocar input e fechar popup
 
+        setValue('nome_produto', '');
+        
         setTimeout(() => {
             setRenderPopup(false)
         }, 200)
@@ -48,14 +54,12 @@ export const Tabela_produtos = () => {
                 <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Custos externos</p></div>
                 <div className="col-1 color-title title-table justify-content-center"><p className='p-title'>Total</p></div>
             </div>
+
             <div className="body-row d-md-flex pl-3">
                 <div className="span-input col-12 col-md-3">
-                    <div className="span-icon-input d-md-flex align-items-center">
-                        <div className="col-12 color-title title-table justify-content-md-center d-md-none">
-                            <p className='txt-compras'>Nome do produto</p>
-                        </div>
+                    <div className="container position-relative">
                         <input 
-                            className='col-10 col-md-11 input-form-produto mx-1 my-3' 
+                            className='col-12 input-form-produto mx-1 mt-3 mb-0' 
                             type="text" 
                             placeholder='' 
                             {...register('nome_produto')}
@@ -65,6 +69,16 @@ export const Tabela_produtos = () => {
                             onBlur={() => {
                                 delay_fechar_popup();
                             }}
+                        />
+                        <Popup_create_fornecedor 
+                        
+                            renderPopup={renderPopup} 
+                            itemDigitado={itemDigitado} 
+                            setValue={setValue} 
+                            Nfunc={2} 
+                            itensPopup={itensPopup}
+                            setItensPopup={setItensPopup}
+                            
                         />
                     </div>
                 </div>
@@ -76,6 +90,7 @@ export const Tabela_produtos = () => {
                         <input className='col-10 col-md-10 input-form-produto mx-1 my-3' type="number" placeholder='R$' />
                     </div>
                 </div>
+                
                 <div className="span-input col-12 col-md-1">
                     <div className="span-icon-input d-md-flex align-items-center">
                         <div className="col-12 color-title title-table justify-content-md-center d-md-none">
@@ -84,6 +99,7 @@ export const Tabela_produtos = () => {
                         <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$'/>
                     </div>
                 </div>
+                
                 <div className="span-input col-12 col-md-1">
                     <div className="span-icon-input d-md-flex align-items-center">
                         <div className="col-12 color-title title-table justify-content-md-center d-md-none">
@@ -92,6 +108,7 @@ export const Tabela_produtos = () => {
                         <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$'/>
                     </div>
                 </div>
+                
                 <div className="span-input col-12 col-md-2">
                     <div className="span-icon-input d-md-flex align-items-center">
                         <div className="col-12 color-title title-table justify-content-md-center d-md-none">
@@ -100,6 +117,7 @@ export const Tabela_produtos = () => {
                         <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$'/>
                     </div>
                 </div>
+                
                 <div className="span-input col-12 col-md-1">
                     <div className="span-icon-input d-md-flex align-items-center">
                         <div className="col-12 color-title title-table justify-content-md-center d-md-none">
@@ -112,6 +130,7 @@ export const Tabela_produtos = () => {
                 <div className="col-1 color-title title-table pad">
                     <p className='m-0 color-title'>R$ 0.00</p>
                 </div>
+
                 <div className="col-1 color-title pad title-table">
                     <button className='btn-trash '>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#ffff" className="bi bi-trash" viewBox="0 0 16 16">
@@ -120,6 +139,7 @@ export const Tabela_produtos = () => {
                         </svg>
                     </button>
                 </div>
+
             </div>
 
         </>
