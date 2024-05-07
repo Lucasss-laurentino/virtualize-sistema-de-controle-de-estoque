@@ -37,3 +37,22 @@
 .footer-row {
     background-color: #DDDDDD;
 }
+
+.input-fornecedor {
+
+    width: 100%;
+    margin-left: 5%;
+
+    color: #605d5d;
+    border: 1px solid #d0cdcd;
+
+    border-radius: 5px;
+
+    outline: 0;
+
+    font-size: 14px;
+    font-weight: normal;
+
+    padding-left: 2%;
+
+}

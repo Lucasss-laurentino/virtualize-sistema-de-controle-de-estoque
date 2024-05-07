@@ -1,6 +1,6 @@
 .popup-fornecedor {
 
-    width: 35%;
+    width: 100%;
 
     border-top: none;
     border-right: 1px solid rgb(216, 216, 216);
@@ -13,6 +13,8 @@
     background-color: white;
 
     position: absolute;
+
+    overflow-x: hidden;
 
 }
 
@@ -72,7 +74,7 @@
 .criar-item {
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     flex-direction: column;

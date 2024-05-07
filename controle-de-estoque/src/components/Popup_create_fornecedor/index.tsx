@@ -20,8 +20,6 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue, i
     const {
         fornecedores,
         criar_fornecedor,
-        pegar_fornecedores,
-        fornecedoresPopUp,
     } = useContext(FornecedorContext);
 
     const { produtos } = useContext(ProdutoContext);
@@ -30,8 +28,8 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue, i
 
     useEffect(() => {
 
-        Nfunc == 1 && setItensPopup([...fornecedores])
-        Nfunc == 2 && setItensPopup([...produtos]);
+        Nfunc === 1 && setItensPopup([...fornecedores])
+        Nfunc === 2 && setItensPopup([...produtos]);
 
     }, [fornecedores])
 
@@ -43,7 +41,7 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue, i
 
             fornecedores?.filter(fornecedor => { // pegar fornecedores que sao iguais ao 'itemDigitado'
 
-                if (fornecedor.nome.indexOf(itemDigitado) != -1 && fornecedor.nome.indexOf(itemDigitado) === 0) {
+                if (fornecedor.nome.indexOf(itemDigitado) !== -1 && fornecedor.nome.indexOf(itemDigitado) === 0) {
                     arrayFornecedores.push(fornecedor);
                 }
 
@@ -95,7 +93,12 @@ export const Popup_create_fornecedor = ({ renderPopup, itemDigitado, setValue, i
                             {itensPopup?.map((item) => {
                                 return (
 
-                                    <li key={item._id} className='item-lista' onClick={() => setValue('nome_fornecedor', item.nome)}>{item.nome}</li>
+                                    <li key={item._id} className='item-lista' onClick={() => {
+                                    
+                                        Nfunc == 1 && setValue('fornecedor', item.nome)
+                                        Nfunc == 2 && setValue('nome_produto', item.nome)
+                                    
+                                    }}>{item.nome}</li>
 
                                 )
                             })}
