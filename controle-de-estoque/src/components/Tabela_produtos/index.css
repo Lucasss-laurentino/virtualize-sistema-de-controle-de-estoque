@@ -6,3 +6,23 @@
 .personalizacao-tabela-compras {
     padding-left: 1%;
 }
+
+.coluna {
+    flex-direction: column;
+}
+
+.tabela-compras.produto {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+.tr-personalizada {
+    background-color: #DDDDDD;
+}
+
+.th-tabela-compras-produto {
+    font-size: 13px;
+}

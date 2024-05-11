@@ -36,15 +36,17 @@
 
     position: absolute;
 
+    z-index: 5;
+
 }
 
 .lista-item {
 
     width: 100%;
 
-    max-height: 12vh;
+    max-height: 21vh;
 
-    padding: 2%;
+    padding: 0%;
 
     margin-bottom: 1%;
 
@@ -92,3 +94,6 @@
     color: #605d5d;
 }
 
+.texto-cadastrar-popup {
+    font-size: 11px;
+}

@@ -100,14 +100,7 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                             }}
                                         />
                                         {/* dentro de popup_create e feito o cadastro desse input */}
-                                        <Popup_create_fornecedor
-                                            renderPopup={renderPopup}
-                                            itemDigitado={itemDigitado}
-                                            Nfunc={1}
-                                            setValue={setValue}
-                                            itensPopup={itensPopup}
-                                            setItensPopup={setItensPopup}
-                                        />
+                                       
                                         {errors.fornecedor && <p className="m-0 text-danger mt-1 texto-erro-cadastro">{errors.fornecedor.message}</p>}
                                     </div>
                                 </div>
@@ -179,7 +172,9 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                             <div className="title-row mb-3">
                                 <h6 className='px-3 color-title'>Produtos</h6>
                             </div>
+                            
                             <Tabela_produtos />
+
                             <div className="footer-row d-flex align-items-center justify-content-between py-3">
                                 <div className="title-row ">
                                     <h6 className='px-3 color-title m-0'>Total</h6>
