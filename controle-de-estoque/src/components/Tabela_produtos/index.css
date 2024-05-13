@@ -1,4 +1,5 @@
 .txt-compras {
+    color: #605d5d;
     margin: 0;
     font-size: 14px;
 }
@@ -25,4 +26,5 @@
 
 .th-tabela-compras-produto {
     font-size: 13px;
+    color: #605d5d;
 }

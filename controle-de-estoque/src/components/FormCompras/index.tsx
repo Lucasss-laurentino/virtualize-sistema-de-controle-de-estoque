@@ -19,6 +19,7 @@ const schema = yup.object({
     date: yup.string().max(10, 'Formato de data inválido +').min(10, 'Formato de data inválido -').required('Campo obrigatório'),
     numero_da_nota: yup.string(),
     palavra_chave: yup.string(),
+    
 });
 
 export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) => {

@@ -12,7 +12,8 @@ const schema = yup.object().shape({
     produto: yup.array().of(
 
         yup.object().shape({
-            nome_produto: yup.string(),
+            nome_produto: yup.string().required(),
+            custo_unitario: yup.string().required(),
         })
 
     ),
@@ -26,19 +27,22 @@ export const Tabela_produtos = () => {
     const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
     const [indexState, setIndexState] = useState<null | number>(null);
     const [id_campo, setId_campo] = useState('');
+    const [elemento, setElemento] = useState<any>();
 
     const {
         register,
         handleSubmit,
         watch,
         setValue,
+        setFocus,
         formState: { errors },
         control,
     } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
             produto: [{
-                nome_produto: ''
+                nome_produto: '',
+                custo_unitario: '',
             }]
         }
     })
@@ -67,7 +71,6 @@ export const Tabela_produtos = () => {
         }
 
     }, [watch()])
-
 
     return (
 
@@ -110,6 +113,7 @@ export const Tabela_produtos = () => {
                         return (
                             <React.Fragment key={field.id}>
                                 <tr>
+                                    
                                     <th className='th-tabela-compras-produto col-2 p-0'>
                                         <div className="span-input col-12">
                                             <div className="container position-relative">
@@ -121,7 +125,7 @@ export const Tabela_produtos = () => {
                                                     onFocus={() => {
 
                                                         setTimeout(() => {
-
+                                                            setElemento(document.getElementsByClassName(`produto.${index}.custo_unitario`))
                                                             setIndexState(index);
                                                             setId_campo(field.id)
                                                             setRenderPopup(true)
@@ -145,18 +149,25 @@ export const Tabela_produtos = () => {
                                                     fieldId={field.id}
                                                     id_campo={id_campo}
                                                     fields={fields}
-                                                    
+                                                    elemento={elemento}
                                                 />
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
                                             <div className="span-icon-input d-md-flex align-items-center">
-                                                <div className="col-12 color-title title-table justify-content-md-center d-md-none">
+                                                <div className="col-12  title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Custo unitário</p>
                                                 </div>
-                                                <input className='col-10 col-md-10 input-form-produto mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.custo_unitario`)}
+                                                    id={`custo_unitario.${index}`}
+                                                    className='col-10 col-md-10 input-form-produto mx-1 my-3' 
+                                                    type="text"
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>

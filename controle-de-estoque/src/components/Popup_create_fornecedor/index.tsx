@@ -18,9 +18,10 @@ interface Props {
     itensPopup: IFornecedor[],
     setItensPopup: React.Dispatch<SetStateAction<IFornecedor[] | IProduto[]>>,
     Nfunc: number,
+    elemento: any,
 }
 
-export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc }: Props) => {
+export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc, elemento }: Props) => {
 
     const {
         fornecedores,
@@ -39,15 +40,22 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
             
             if(field.nome_produto === '') {
                 setCriar_componente(false);
-            }
+            }            
         
         })
 
         if(criar_componente){
 
-            append({
-                nome_produto: '',
-            })    
+            append(
+                {
+                    nome_produto: '',
+                },
+                {
+                    focusName: `produto.${index}.custo_unitario`,
+                }
+            
+            )  
+
 
         }
 
