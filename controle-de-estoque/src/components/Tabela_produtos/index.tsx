@@ -28,7 +28,7 @@ export const Tabela_produtos = () => {
     const [indexState, setIndexState] = useState<null | number>(null);
     const [id_campo, setId_campo] = useState('');
     const [elemento, setElemento] = useState<any>();
-
+    
     const {
         register,
         handleSubmit,
@@ -62,6 +62,11 @@ export const Tabela_produtos = () => {
 
     }
 
+    const input_mascara = Intl.NumberFormat('pt-BR', {
+        currency: 'BRL',
+        style: 'currency',
+    });
+
     useEffect(() => {
 
         if(indexState != null) {
@@ -71,6 +76,19 @@ export const Tabela_produtos = () => {
         }
 
     }, [watch()])
+
+    useEffect(() => {
+
+        if(indexState !== null){
+
+
+            const txt = watch(`produto.${indexState}.custo_unitario`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.custo_unitario` ,input_mascara.format(parseInt(txt) / 100));
+            
+
+        }
+
+    },[watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`)])
 
     return (
 
@@ -161,12 +179,12 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12  title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Custo unitário</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.custo_unitario`)}
                                                     id={`custo_unitario.${index}`}
                                                     className='col-10 col-md-10 input-form-produto mx-1 my-3' 
                                                     type="text"
-                                                    placeholder='R$' 
+                                                    placeholder='R$'
                                                 />
                                             </div>
                                         </div>
