@@ -14,6 +14,13 @@ const schema = yup.object().shape({
         yup.object().shape({
             nome_produto: yup.string().required(),
             custo_unitario: yup.string().required(),
+            quantidade: yup.number().required(),
+            desconto: yup.string().required(),
+            outros_custos: yup.string().required(),
+            custos_externos: yup.string().required(),
+            ipi: yup.string().required(),
+            substituicao_tributaria: yup.string().required(),
+
         })
 
     ),
@@ -42,7 +49,13 @@ export const Tabela_produtos = () => {
         defaultValues: {
             produto: [{
                 nome_produto: '',
-                custo_unitario: '',
+                custo_unitario: '0,00',
+                quantidade: 0,
+                desconto: '0,00',
+                outros_custos: '0,00',
+                custos_externos: '0,00',
+                ipi: '0,00',
+                substituicao_tributaria: '0,00',
             }]
         }
     })
@@ -73,22 +86,34 @@ export const Tabela_produtos = () => {
 
             let texto = watch(`produto.${indexState}.nome_produto`);
             setItemDigitado(texto != undefined ? texto : '');
+
+            // custo unitario
+            const custo_unitario = watch(`produto.${indexState}.custo_unitario`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.custo_unitario` ,input_mascara.format(parseInt(custo_unitario) / 100));
+
+            // desconto
+            const desconto = watch(`produto.${indexState}.desconto`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.desconto` ,input_mascara.format(parseInt(desconto) / 100));
+
+            // outros custos
+            const outros_custos = watch(`produto.${indexState}.outros_custos`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.outros_custos` ,input_mascara.format(parseInt(outros_custos) / 100));
+
+            // custos externos
+            const custos_externos = watch(`produto.${indexState}.custos_externos`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.custos_externos` ,input_mascara.format(parseInt(custos_externos) / 100));
+
+            // ipi
+            const ipi = watch(`produto.${indexState}.ipi`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.ipi` ,input_mascara.format(parseInt(ipi) / 100));
+
+            // Substituição tributaria
+            const substituicao_tributaria = watch(`produto.${indexState}.substituicao_tributaria`).replace(/\D/g, '');
+            setValue(`produto.${indexState}.substituicao_tributaria` ,input_mascara.format(parseInt(substituicao_tributaria) / 100));
+
         }
 
     }, [watch()])
-
-    useEffect(() => {
-
-        if(indexState !== null){
-
-
-            const txt = watch(`produto.${indexState}.custo_unitario`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.custo_unitario` ,input_mascara.format(parseInt(txt) / 100));
-            
-
-        }
-
-    },[watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`)])
 
     return (
 
@@ -189,53 +214,85 @@ export const Tabela_produtos = () => {
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
                                             <div className="span-icon-input d-md-flex align-items-center">
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Quantidade</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.quantidade`, {
+                                                        valueAsNumber: true
+                                                    })}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="number" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
                                             <div className="span-icon-input d-md-flex align-items-center">
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Desconto</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.desconto`)}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="text" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12 ">
                                             <div className="span-icon-input d-md-flex align-items-center">
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Outros custos</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.outros_custos`)}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="text" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
                                             <div className="span-icon-input d-md-flex align-items-center">
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Custos externos</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.custos_externos`)}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="text" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
+
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
                                             <div className="span-icon-input d-md-flex align-items-center">
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>IPI</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.ipi`)}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="text" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
@@ -245,12 +302,17 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Substituição tributária</p>
                                                 </div>
-                                                <input className='input-form-produto col-10 mx-1 my-3' type="number" placeholder='R$' />
+                                                <input 
+                                                    {...register(`produto.${index}.substituicao_tributaria`)}
+                                                    className='input-form-produto col-10 mx-1 my-3' 
+                                                    type="text" 
+                                                    placeholder='R$' 
+                                                />
                                             </div>
                                         </div>
                                     </th>
                                     <th className='th-tabela-compras-produto col-1'>
-                                        00,00
+                                        0,00
                                     </th>
                                 </tr>
                             </React.Fragment>
