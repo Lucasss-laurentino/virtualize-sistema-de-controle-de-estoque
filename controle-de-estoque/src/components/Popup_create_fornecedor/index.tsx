@@ -19,9 +19,10 @@ interface Props {
     setItensPopup: React.Dispatch<SetStateAction<IFornecedor[] | IProduto[]>>,
     Nfunc: number,
     elemento: any,
+    input_mascara:any,
 }
 
-export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc, elemento }: Props) => {
+export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc, elemento, input_mascara }: Props) => {
 
     const {
         fornecedores,
@@ -49,6 +50,14 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
             append(
                 {
                     nome_produto: '',
+                    custo_unitario: input_mascara.format(parseInt('000') / 100),
+                    quantidade: 0,
+                    desconto: input_mascara.format(parseInt('000') / 100),
+                    outros_custos: input_mascara.format(parseInt('000') / 100),
+                    custos_externos: input_mascara.format(parseInt('000') / 100),
+                    ipi: input_mascara.format(parseInt('000') / 100),
+                    substituicao_tributaria: input_mascara.format(parseInt('000') / 100),
+
                 },
                 {
                     focusName: `produto.${index}.custo_unitario`,

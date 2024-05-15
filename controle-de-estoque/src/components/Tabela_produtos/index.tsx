@@ -35,7 +35,16 @@ export const Tabela_produtos = () => {
     const [indexState, setIndexState] = useState<null | number>(null);
     const [id_campo, setId_campo] = useState('');
     const [elemento, setElemento] = useState<any>();
-    
+    const [total, setTotal] = useState('0,00');
+
+    const custo_unitario_ = useState(0);
+    const desconto_ = useState(0);
+    const outros_custos_ = useState(0);
+    const custos_externos_ = useState(0);
+    const ipi_ = useState(0);
+    const substituicao_tributaria_ = useState(0);
+    const quantidade_ = useState(0);
+
     const {
         register,
         handleSubmit,
@@ -60,17 +69,16 @@ export const Tabela_produtos = () => {
         }
     })
 
-    const { fields, append} = useFieldArray({
+    const { fields, append } = useFieldArray({
         name: 'produto',
         control
     });
 
     const delay_fechar_popup = () => { // função de delay pro click funcionar quando desfocar input e fechar popup
 
-
         setTimeout(() => {
-         setRenderPopup(false)
-         setId_campo('')
+            setRenderPopup(false)
+            setId_campo('')
         }, 200)
 
     }
@@ -82,38 +90,55 @@ export const Tabela_produtos = () => {
 
     useEffect(() => {
 
-        if(indexState != null) {
+        let texto = watch(`produto.${indexState !== null ? indexState : 0}.nome_produto`);
+        setItemDigitado(texto !== undefined ? texto : '');
 
-            let texto = watch(`produto.${indexState}.nome_produto`);
-            setItemDigitado(texto != undefined ? texto : '');
+        // custo unitario
+        const custo_unitario = watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.custo_unitario`, input_mascara.format(parseInt(custo_unitario) / 100));
 
-            // custo unitario
-            const custo_unitario = watch(`produto.${indexState}.custo_unitario`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.custo_unitario` ,input_mascara.format(parseInt(custo_unitario) / 100));
+        // desconto
+        const desconto = watch(`produto.${indexState !== null ? indexState : 0}.desconto`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.desconto`, input_mascara.format(parseInt(desconto) / 100));
 
-            // desconto
-            const desconto = watch(`produto.${indexState}.desconto`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.desconto` ,input_mascara.format(parseInt(desconto) / 100));
+        // outros custos
+        const outros_custos = watch(`produto.${indexState !== null ? indexState : 0}.outros_custos`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.outros_custos`, input_mascara.format(parseInt(outros_custos) / 100));
 
-            // outros custos
-            const outros_custos = watch(`produto.${indexState}.outros_custos`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.outros_custos` ,input_mascara.format(parseInt(outros_custos) / 100));
+        // custos externos
+        const custos_externos = watch(`produto.${indexState !== null ? indexState : 0}.custos_externos`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.custos_externos`, input_mascara.format(parseInt(custos_externos) / 100));
 
-            // custos externos
-            const custos_externos = watch(`produto.${indexState}.custos_externos`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.custos_externos` ,input_mascara.format(parseInt(custos_externos) / 100));
+        // ipi
+        const ipi = watch(`produto.${indexState !== null ? indexState : 0}.ipi`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.ipi`, input_mascara.format(parseInt(ipi) / 100));
 
-            // ipi
-            const ipi = watch(`produto.${indexState}.ipi`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.ipi` ,input_mascara.format(parseInt(ipi) / 100));
+        // Substituição tributaria
+        const substituicao_tributaria = watch(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`).replace(/\D/g, '');
+        setValue(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`, input_mascara.format(parseInt(substituicao_tributaria) / 100));
 
-            // Substituição tributaria
-            const substituicao_tributaria = watch(`produto.${indexState}.substituicao_tributaria`).replace(/\D/g, '');
-            setValue(`produto.${indexState}.substituicao_tributaria` ,input_mascara.format(parseInt(substituicao_tributaria) / 100));
+        const quantidade = watch(`produto.${indexState !== null ? indexState : 0}.quantidade`);
 
+        const elemento = document.getElementById(`produto.${indexState !== null ? indexState : 0}.total`);
+
+        if(elemento !== null && elemento !== undefined) {
+            
+            elemento.innerHTML = input_mascara.format((
+                parseInt(custo_unitario) * quantidade - parseInt(desconto) + parseInt(outros_custos) + parseInt(custos_externos) + parseInt(ipi) + parseInt(substituicao_tributaria)
+            ) / 100)
+        
         }
 
-    }, [watch()])
+    },
+        [
+            watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`),
+            watch(`produto.${indexState !== null ? indexState : 0}.desconto`),
+            watch(`produto.${indexState !== null ? indexState : 0}.outros_custos`),
+            watch(`produto.${indexState !== null ? indexState : 0}.custos_externos`),
+            watch(`produto.${indexState !== null ? indexState : 0}.ipi`),
+            watch(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`),
+            watch(`produto.${indexState !== null ? indexState : 0}.quantidade`)
+        ])
 
     return (
 
@@ -156,7 +181,7 @@ export const Tabela_produtos = () => {
                         return (
                             <React.Fragment key={field.id}>
                                 <tr>
-                                    
+
                                     <th className='th-tabela-compras-produto col-2 p-0'>
                                         <div className="span-input col-12">
                                             <div className="container position-relative">
@@ -172,7 +197,7 @@ export const Tabela_produtos = () => {
                                                             setIndexState(index);
                                                             setId_campo(field.id)
                                                             setRenderPopup(true)
-    
+
                                                         }, 300)
                                                     }}
                                                     onBlur={() => {
@@ -193,6 +218,7 @@ export const Tabela_produtos = () => {
                                                     id_campo={id_campo}
                                                     fields={fields}
                                                     elemento={elemento}
+                                                    input_mascara={input_mascara}
                                                 />
                                             </div>
                                         </div>
@@ -207,9 +233,12 @@ export const Tabela_produtos = () => {
                                                 <input
                                                     {...register(`produto.${index}.custo_unitario`)}
                                                     id={`custo_unitario.${index}`}
-                                                    className='col-10 col-md-10 input-form-produto mx-1 my-3' 
+                                                    className='col-10 col-md-10 input-form-produto mx-1 my-3'
                                                     type="text"
                                                     placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
                                                 />
                                             </div>
                                         </div>
@@ -221,13 +250,17 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Quantidade</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.quantidade`, {
                                                         valueAsNumber: true
                                                     })}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="number" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="number"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
@@ -239,11 +272,15 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Desconto</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.desconto`)}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="text" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="text"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
@@ -255,11 +292,15 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Outros custos</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.outros_custos`)}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="text" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="text"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
@@ -271,11 +312,15 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Custos externos</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.custos_externos`)}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="text" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="text"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
@@ -287,11 +332,15 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>IPI</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.ipi`)}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="text" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="text"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
@@ -302,17 +351,25 @@ export const Tabela_produtos = () => {
                                                 <div className="col-12 color-title title-table justify-content-md-center d-md-none">
                                                     <p className='txt-compras'>Substituição tributária</p>
                                                 </div>
-                                                <input 
+                                                <input
                                                     {...register(`produto.${index}.substituicao_tributaria`)}
-                                                    className='input-form-produto col-10 mx-1 my-3' 
-                                                    type="text" 
-                                                    placeholder='R$' 
+                                                    className='input-form-produto col-10 mx-1 my-3'
+                                                    type="text"
+                                                    placeholder='R$'
+                                                    onFocus={() => {
+                                                        setIndexState(index)
+                                                    }}
+
                                                 />
                                             </div>
                                         </div>
                                     </th>
                                     <th className='th-tabela-compras-produto col-1'>
-                                        0,00
+
+                                        <p className='m-0' id={`produto.${index}.total`}>
+                                            R$ 0,00
+                                        </p>
+
                                     </th>
                                 </tr>
                             </React.Fragment>
