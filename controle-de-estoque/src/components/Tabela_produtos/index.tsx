@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useFieldArray, useForm } from 'react-hook-form';
 import './index.css';
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Popup_create_fornecedor } from '../Popup_create_fornecedor';
 import IProduto from '../../types/Produto';
 import IFornecedor from '../../types/Fornecedor';
@@ -20,30 +20,26 @@ const schema = yup.object().shape({
             custos_externos: yup.string().required(),
             ipi: yup.string().required(),
             substituicao_tributaria: yup.string().required(),
-
+            total: yup.string().required(),
         })
 
     ),
 
 })
 
-export const Tabela_produtos = () => {
+interface Props {
+    setPreco_total_de_produtos: React.Dispatch<SetStateAction<string>>,
+    preco_total_de_produtos: string,
+}
+
+export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_produtos}: Props) => {
 
     const [renderPopup, setRenderPopup] = useState(false);
     const [itemDigitado, setItemDigitado] = useState('');
     const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
-    const [indexState, setIndexState] = useState<null | number>(null);
+    const [indexState, setIndexState] = useState<number>(0);
     const [id_campo, setId_campo] = useState('');
     const [elemento, setElemento] = useState<any>();
-    const [total, setTotal] = useState('0,00');
-
-    const custo_unitario_ = useState(0);
-    const desconto_ = useState(0);
-    const outros_custos_ = useState(0);
-    const custos_externos_ = useState(0);
-    const ipi_ = useState(0);
-    const substituicao_tributaria_ = useState(0);
-    const quantidade_ = useState(0);
 
     const {
         register,
@@ -65,6 +61,7 @@ export const Tabela_produtos = () => {
                 custos_externos: '0,00',
                 ipi: '0,00',
                 substituicao_tributaria: '0,00',
+                total: '0,00',
             }]
         }
     })
@@ -90,55 +87,73 @@ export const Tabela_produtos = () => {
 
     useEffect(() => {
 
-        let texto = watch(`produto.${indexState !== null ? indexState : 0}.nome_produto`);
+        // adicionando mascara de R$ nos inputs
+        let texto = watch(`produto.${indexState}.nome_produto`);
         setItemDigitado(texto !== undefined ? texto : '');
 
         // custo unitario
-        const custo_unitario = watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.custo_unitario`, input_mascara.format(parseInt(custo_unitario) / 100));
+        const custo_unitario = watch(`produto.${indexState}.custo_unitario`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.custo_unitario`, input_mascara.format(parseInt(custo_unitario) / 100));
 
         // desconto
-        const desconto = watch(`produto.${indexState !== null ? indexState : 0}.desconto`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.desconto`, input_mascara.format(parseInt(desconto) / 100));
+        const desconto = watch(`produto.${indexState}.desconto`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.desconto`, input_mascara.format(parseInt(desconto) / 100));
 
         // outros custos
-        const outros_custos = watch(`produto.${indexState !== null ? indexState : 0}.outros_custos`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.outros_custos`, input_mascara.format(parseInt(outros_custos) / 100));
+        const outros_custos = watch(`produto.${indexState}.outros_custos`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.outros_custos`, input_mascara.format(parseInt(outros_custos) / 100));
 
         // custos externos
-        const custos_externos = watch(`produto.${indexState !== null ? indexState : 0}.custos_externos`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.custos_externos`, input_mascara.format(parseInt(custos_externos) / 100));
+        const custos_externos = watch(`produto.${indexState}.custos_externos`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.custos_externos`, input_mascara.format(parseInt(custos_externos) / 100));
 
         // ipi
-        const ipi = watch(`produto.${indexState !== null ? indexState : 0}.ipi`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.ipi`, input_mascara.format(parseInt(ipi) / 100));
+        const ipi = watch(`produto.${indexState}.ipi`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.ipi`, input_mascara.format(parseInt(ipi) / 100));
 
         // Substituição tributaria
-        const substituicao_tributaria = watch(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`).replace(/\D/g, '');
-        setValue(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`, input_mascara.format(parseInt(substituicao_tributaria) / 100));
+        const substituicao_tributaria = watch(`produto.${indexState}.substituicao_tributaria`).replace(/\D/g, '');
+        setValue(`produto.${indexState}.substituicao_tributaria`, input_mascara.format(parseInt(substituicao_tributaria) / 100));
 
-        const quantidade = watch(`produto.${indexState !== null ? indexState : 0}.quantidade`);
+        // -------------------
 
-        const elemento = document.getElementById(`produto.${indexState !== null ? indexState : 0}.total`);
-
-        if(elemento !== null && elemento !== undefined) {
+        // setando total do produto e total da compra
+        const quantidade = watch(`produto.${indexState}.quantidade`);
             
-            elemento.innerHTML = input_mascara.format((
-                parseInt(custo_unitario) * quantidade - parseInt(desconto) + parseInt(outros_custos) + parseInt(custos_externos) + parseInt(ipi) + parseInt(substituicao_tributaria)
-            ) / 100)
-        
-        }
+        const preco_compra_produto = input_mascara.format((
+            parseInt(custo_unitario) * quantidade - parseInt(desconto) + parseInt(outros_custos) + parseInt(custos_externos) + parseInt(ipi) + parseInt(substituicao_tributaria)
+        ) / 100)
+
+        setValue(`produto.${indexState}.total`,preco_compra_produto);
 
     },
         [
+            watch(`produto.${indexState !== null ? indexState : 0}.nome_produto`),
             watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`),
             watch(`produto.${indexState !== null ? indexState : 0}.desconto`),
             watch(`produto.${indexState !== null ? indexState : 0}.outros_custos`),
             watch(`produto.${indexState !== null ? indexState : 0}.custos_externos`),
             watch(`produto.${indexState !== null ? indexState : 0}.ipi`),
             watch(`produto.${indexState !== null ? indexState : 0}.substituicao_tributaria`),
-            watch(`produto.${indexState !== null ? indexState : 0}.quantidade`)
-        ])
+            watch(`produto.${indexState !== null ? indexState : 0}.quantidade`),
+    ]);
+
+    useEffect(() => {
+
+        let array_precos: number[] = []
+        for (let index = 0; index < fields.length; index++) {
+
+            array_precos.push(parseInt(watch(`produto.${index}.total`).replace(/\D/g, '')));
+
+        }
+
+            setPreco_total_de_produtos(input_mascara.format(
+                array_precos.reduce((total, preco) => {
+                    return (total + preco)
+                }) / 100
+            ))
+    
+    }, [watch()])
 
     return (
 
@@ -205,7 +220,6 @@ export const Tabela_produtos = () => {
                                                     }}
                                                 />
                                                 <Popup_create_fornecedor
-
                                                     append={append}
                                                     index={index}
                                                     renderPopup={renderPopup}
@@ -217,7 +231,6 @@ export const Tabela_produtos = () => {
                                                     fieldId={field.id}
                                                     id_campo={id_campo}
                                                     fields={fields}
-                                                    elemento={elemento}
                                                     input_mascara={input_mascara}
                                                 />
                                             </div>
@@ -365,11 +378,12 @@ export const Tabela_produtos = () => {
                                         </div>
                                     </th>
                                     <th className='th-tabela-compras-produto col-1'>
-
-                                        <p className='m-0' id={`produto.${index}.total`}>
-                                            R$ 0,00
-                                        </p>
-
+                                        <input 
+                                            className='input-disabled mx-2' 
+                                            readOnly 
+                                            type="text"  
+                                            {...register(`produto.${index}.total`)}
+                                        />
                                     </th>
                                 </tr>
                             </React.Fragment>

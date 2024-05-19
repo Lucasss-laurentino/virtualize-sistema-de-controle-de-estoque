@@ -28,3 +28,15 @@
     font-size: 13px;
     color: #605d5d;
 }
+
+.input-disabled {
+
+    width: 100%;
+    color: #605d5d;
+    border: none;
+    background-color: transparent;
+    outline: 0;
+
+    font-weight: 600;
+
+}

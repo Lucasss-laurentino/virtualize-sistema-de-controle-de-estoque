@@ -29,6 +29,8 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
     const { pegar_fornecedores } = useContext(FornecedorContext);
     const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
 
+    const [preco_total_de_produtos, setPreco_total_de_produtos] = useState('R$ 0,00');
+
     const closeFormVendas = () => {
         setClassFormCompras('div-form-compras-none');
     }
@@ -174,7 +176,7 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                 <h6 className='px-3 color-title'>Produtos</h6>
                             </div>
                             
-                            <Tabela_produtos />
+                            <Tabela_produtos setPreco_total_de_produtos={setPreco_total_de_produtos} preco_total_de_produtos={preco_total_de_produtos}/>
 
                             <div className="footer-row d-flex align-items-center justify-content-between py-3">
                                 <div className="title-row ">
@@ -184,7 +186,7 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                     <h6 className='px-3 color-title m-0'>0</h6>
                                 </div>
                                 <div className="title-row ">
-                                    <h6 className='px-3 color-title m-0'>R$ 0,00</h6>
+                                    <h6 className='px-3 color-title m-0'>{preco_total_de_produtos}</h6>
                                 </div>
 
                             </div>

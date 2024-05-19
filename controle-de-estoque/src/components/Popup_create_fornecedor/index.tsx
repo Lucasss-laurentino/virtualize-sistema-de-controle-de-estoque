@@ -6,6 +6,11 @@ import React from 'react';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
 import IProduto from '../../types/Produto';
 
+type Array_compra = {
+    id: string,
+    total: number,
+}
+
 interface Props {
     append: any,
     fieldId: string,
@@ -18,11 +23,10 @@ interface Props {
     itensPopup: IFornecedor[],
     setItensPopup: React.Dispatch<SetStateAction<IFornecedor[] | IProduto[]>>,
     Nfunc: number,
-    elemento: any,
     input_mascara:any,
 }
 
-export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc, elemento, input_mascara }: Props) => {
+export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, index, renderPopup, itemDigitado, setValue, itensPopup, setItensPopup, Nfunc, input_mascara}: Props) => {
 
     const {
         fornecedores,
@@ -30,7 +34,7 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
     } = useContext(FornecedorContext);
 
     const { produtos } = useContext(ProdutoContext);
-    const [gatilho_form_item_lista, setGatilho_form_item_lista] = useState(false);
+    const [gatilho_form_item_lista, setGatilho_form_item_lista] = useState(true);
     const [criar_componente, setCriar_componente] = useState(true);
     
     const novo_componente = (itemNome: string) => {
@@ -57,14 +61,13 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
                     custos_externos: input_mascara.format(parseInt('000') / 100),
                     ipi: input_mascara.format(parseInt('000') / 100),
                     substituicao_tributaria: input_mascara.format(parseInt('000') / 100),
-
+                    total: input_mascara.format(parseInt('000') / 100),                    
                 },
                 {
                     focusName: `produto.${index}.custo_unitario`,
                 }
             
             )  
-
 
         }
 
@@ -103,19 +106,26 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
 
         if (Nfunc === 2) {
 
+            if(itemDigitado.length > 0){
+                setGatilho_form_item_lista(false)
+            }
+
             let arrayProdutos: IProduto[] = [];
 
             produtos?.filter(produto => { // pegar fornecedores que sao iguais ao 'itemDigitado'
 
                 if (produto.nome.indexOf(itemDigitado) != -1 && produto.nome.indexOf(itemDigitado) === 0) {
+
                     arrayProdutos.push(produto);
+
                 }
 
-                if (produto.nome === itemDigitado) {
+                if(produto.nome === itemDigitado){
+
                     setGatilho_form_item_lista(true);
-                } else {
-                    setGatilho_form_item_lista(false);
+                    
                 }
+
 
             })
 
@@ -147,8 +157,11 @@ export const Popup_create_fornecedor = ({append, fieldId, fields, id_campo, inde
                                 )
                             })}
 
+                            
+
                             {!gatilho_form_item_lista &&
 
+                                // form
                                 <li className="item-lista">
 
                                     <>
