@@ -14,11 +14,6 @@ export const PaginaInicial = () => {
 
     const { usuario } = useContext(UserContext);
 
-    useEffect(() => {
-
-
-    }, [usuario])
-
     const data = {
         labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
         datasets: [

@@ -21,10 +21,12 @@ export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
 
     const pegar_fornecedores = () => {
 
-        
         http.get('/pegar_fornecedores').then((response) => {
-            setFornecedoresPopUp([...response.data.fornecedores])
-            setFornecedores([...response.data.fornecedores]);
+            console.log(response.data)
+            //setFornecedoresPopUp([...response.data.fornecedores])
+            //setFornecedores([...response.data.fornecedores]);
+        }).catch((response) => {
+            console.log(response)
         })
         
 

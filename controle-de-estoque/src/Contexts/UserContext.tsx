@@ -19,7 +19,8 @@ export const UserProvider = ({children}: {children: JSX.Element}) => {
     const validarToken = () => {
 
         http.post('/validar_token').then((response) => {
-            setUsuario(response.data.usuario);
+            console.log(response.data)
+            //setUsuario(response.data.usuario);
         }).catch((response) => {
             setUsuario(null);
         })

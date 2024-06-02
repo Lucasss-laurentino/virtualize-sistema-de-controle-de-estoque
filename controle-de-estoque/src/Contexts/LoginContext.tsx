@@ -20,14 +20,18 @@ export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
     const criarUsuario = (data: any) => {
         
         http.post('/cadastrar_usuario', {data}).then((response) => {
+                        
             const token = response.data.token;
-            setUsuario(jwtDecode(token));
-            setUsuarioLogado(true);
-            localStorage.setItem('token', token);
 
+            setUsuario(jwtDecode(token));
+
+            setUsuarioLogado(true);
+
+            localStorage.setItem('token', token);
+            
         }).catch((response) => {
 
-            console.log(response.response);
+            console.log(response);
 
         })
 

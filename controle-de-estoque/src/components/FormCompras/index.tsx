@@ -4,7 +4,6 @@ import './index.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Popup_create_fornecedor } from '../Popup_create_fornecedor';
 import { FornecedorContext } from '../../Contexts/FornecedorContext';
 import IFornecedor from '../../types/Fornecedor';
 import IProduto from '../../types/Produto';
