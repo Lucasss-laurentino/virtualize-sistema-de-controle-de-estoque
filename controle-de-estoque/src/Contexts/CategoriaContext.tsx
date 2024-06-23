@@ -38,7 +38,7 @@ export const CategoriaProvider = ({children}: {children: JSX.Element}) => {
 
     const pegar_categorias = () => {
 
-        http.get('/pegar_categorias').then((response) => {
+        http.get('/').then((response) => {
             //console.log(response.data)
         })
 

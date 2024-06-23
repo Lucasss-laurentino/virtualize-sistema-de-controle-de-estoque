@@ -1,5 +1,5 @@
 export default interface IProduto {
-    _id: string,
+    id: string,
     nome: string,
     codigo_proprio: string,
     categoria: string,
@@ -8,5 +8,6 @@ export default interface IProduto {
     preco_de_venda: string,
     estoque_atual: string,
     estoque_minimo: string,
+    fornecedorId: string,
     total: string,
 }

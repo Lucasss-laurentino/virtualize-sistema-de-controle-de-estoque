@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import { FornecedorContext } from '../../Contexts/FornecedorContext';
 import IFornecedor from '../../types/Fornecedor';
 import IProduto from '../../types/Produto';
+import { Popup_fornecedor } from '../Popup_fornecedor';
+import { ProdutoContext } from '../../Contexts/ProdutoContext';
 
 interface Props {
     classFormCompras: string,
@@ -18,14 +20,13 @@ const schema = yup.object({
     date: yup.string().max(10, 'Formato de data inválido +').min(10, 'Formato de data inválido -').required('Campo obrigatório'),
     numero_da_nota: yup.string(),
     palavra_chave: yup.string(),
-    
 });
 
 export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) => {
 
     const [renderPopup, setRenderPopup] = useState(false);
     const [itemDigitado, setItemDigitado] = useState('');
-    const { pegar_fornecedores } = useContext(FornecedorContext);
+    const { pegar_fornecedores, fornecedores, setFornecedores } = useContext(FornecedorContext);
     const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
 
     const [preco_total_de_produtos, setPreco_total_de_produtos] = useState('R$ 0,00');
@@ -101,8 +102,11 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                                                 delay_fechar_popup();
                                             }}
                                         />
-                                        {/* dentro de popup_create e feito o cadastro desse input */}
-                                       
+                                       <Popup_fornecedor
+                                        renderPopup={renderPopup}
+                                        itemDigitado={itemDigitado}
+                                        setValue={setValue}
+                                       />
                                         {errors.fornecedor && <p className="m-0 text-danger mt-1 texto-erro-cadastro">{errors.fornecedor.message}</p>}
                                     </div>
                                 </div>

@@ -3,16 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useFieldArray, useForm } from 'react-hook-form';
 import './index.css';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Popup_create_fornecedor } from '../Popup_create_fornecedor';
+import { Popup_produto } from '../Popup_produto';
 import IProduto from '../../types/Produto';
-import IFornecedor from '../../types/Fornecedor';
 
 const schema = yup.object().shape({
 
     produto: yup.array().of(
 
         yup.object().shape({
-            nome_produto: yup.string().required(),
+            nome: yup.string().required(),
             custo_unitario: yup.string().required(),
             quantidade: yup.number().required(),
             desconto: yup.string().required(),
@@ -36,7 +35,7 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
 
     const [renderPopup, setRenderPopup] = useState(false);
     const [itemDigitado, setItemDigitado] = useState('');
-    const [itensPopup, setItensPopup] = useState<IFornecedor[] | IProduto[]>([]);
+    const [itensPopup, setItensPopup] = useState<IProduto[]>([]);
     const [indexState, setIndexState] = useState<number>(0);
     const [id_campo, setId_campo] = useState('');
     const [elemento, setElemento] = useState<any>();
@@ -53,7 +52,7 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
         resolver: yupResolver(schema),
         defaultValues: {
             produto: [{
-                nome_produto: '',
+                nome: '',
                 custo_unitario: '0,00',
                 quantidade: 0,
                 desconto: '0,00',
@@ -88,7 +87,7 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
     useEffect(() => {
 
         // adicionando mascara de R$ nos inputs
-        let texto = watch(`produto.${indexState}.nome_produto`);
+        let texto = watch(`produto.${indexState}.nome`);
         setItemDigitado(texto !== undefined ? texto : '');
 
         // custo unitario
@@ -128,7 +127,7 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
 
     },
         [
-            watch(`produto.${indexState !== null ? indexState : 0}.nome_produto`),
+            watch(`produto.${indexState !== null ? indexState : 0}.nome`),
             watch(`produto.${indexState !== null ? indexState : 0}.custo_unitario`),
             watch(`produto.${indexState !== null ? indexState : 0}.desconto`),
             watch(`produto.${indexState !== null ? indexState : 0}.outros_custos`),
@@ -204,7 +203,7 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
                                                     className='col-12 input-form-produto'
                                                     type="text"
                                                     placeholder=''
-                                                    {...register(`produto.${index}.nome_produto`)}
+                                                    {...register(`produto.${index}.nome`)}
                                                     onFocus={() => {
 
                                                         setTimeout(() => {
@@ -219,13 +218,12 @@ export const Tabela_produtos = ({setPreco_total_de_produtos, preco_total_de_prod
                                                         delay_fechar_popup();
                                                     }}
                                                 />
-                                                <Popup_create_fornecedor
+                                                <Popup_produto
                                                     append={append}
                                                     index={index}
                                                     renderPopup={renderPopup}
                                                     itemDigitado={itemDigitado}
                                                     setValue={setValue}
-                                                    Nfunc={2}
                                                     itensPopup={itensPopup}
                                                     setItensPopup={setItensPopup}
                                                     fieldId={field.id}

@@ -1,6 +1,7 @@
 import { SetStateAction, createContext, useState } from "react";
 import IFornecedor from "../types/Fornecedor";
 import { http } from "../http/http";
+import axios from 'axios';
 
 type FornecedorType = {
 
@@ -17,29 +18,31 @@ export const FornecedorContext = createContext<FornecedorType>(null!);
 export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
 
     const [fornecedores, setFornecedores] = useState<IFornecedor[]>([]);
-    const [fornecedoresPopUp, setFornecedoresPopUp] = useState<IFornecedor[]>([]);
+    const [fornecedoresPopUp, setFornecedoresPopUp] = useState<IFornecedor[]>([...fornecedores]);
 
     const pegar_fornecedores = () => {
+        //console.log('antes da req '+localStorage.getItem('token'))
 
-        http.get('/pegar_fornecedores').then((response) => {
-            console.log(response.data)
-            //setFornecedoresPopUp([...response.data.fornecedores])
-            //setFornecedores([...response.data.fornecedores]);
+        http.get('/fornecedor').then((response) => {
+            setFornecedoresPopUp([...response.data.fornecedores])
+            setFornecedores([...response.data.fornecedores]);
+            console.log(response.data.fornecedores);
         }).catch((response) => {
-            console.log(response)
+            console.log(response?.response.data)
         })
         
-
     }
 
     const criar_fornecedor = (itemDigitado: string ) => {
 
         const nome = itemDigitado;
 
-        http.post('/criar_fornecedor', {nome}).then((response) => {
+        http.post('/fornecedor', {nome}).then((response) => {
             console.log(response.data);
-            setFornecedoresPopUp([...fornecedoresPopUp, response.data.novo_fornecedor])
-            setFornecedores([...fornecedores, response.data.novo_fornecedor]);
+            setFornecedoresPopUp([...fornecedoresPopUp, response.data.fornecedor])
+            setFornecedores([...fornecedores, response.data.fornecedor]);
+        }).catch(erro => {
+            console.log(erro.response);
         })
 
     }

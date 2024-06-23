@@ -15,9 +15,7 @@ export const NavBar = ({ toggle, setToggle}: Props) => {
     const [menuUsuarioAtivado, setMenuUsuarioAtivado] = useState(false);
 
     const openLogin = () => {
-
         setToggle(true)
-
     }
 
     const fecharMenuEsair = () => {
@@ -34,7 +32,6 @@ export const NavBar = ({ toggle, setToggle}: Props) => {
         }
 
     }, [usuario])
-
 
     return(
   

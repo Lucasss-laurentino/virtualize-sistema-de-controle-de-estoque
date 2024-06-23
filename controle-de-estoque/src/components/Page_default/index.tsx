@@ -14,7 +14,7 @@ export const Page_default = () => {
 
 
     useEffect(() => {
-        validarToken();
+        //localStorage.setItem('token', '');
     }, []);
     
 

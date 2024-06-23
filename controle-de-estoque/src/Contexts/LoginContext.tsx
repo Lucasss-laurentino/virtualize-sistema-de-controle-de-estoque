@@ -20,14 +20,16 @@ export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
     const criarUsuario = (data: any) => {
         
         http.post('/cadastrar_usuario', {data}).then((response) => {
-                        
-            const token = response.data.token;
+           
+            
+            console.log(response.data.token);
+            
+            localStorage.setItem('token', response.data.token);
 
-            setUsuario(jwtDecode(token));
+            setUsuario(jwtDecode(response.data.token));
 
             setUsuarioLogado(true);
 
-            localStorage.setItem('token', token);
             
         }).catch((response) => {
 
@@ -45,7 +47,7 @@ export const LoginContextProvider = ({children}: {children: JSX.Element}) => {
             
             setUsuarioLogado(true);
 
-            console.log(response.data);
+            //window.location.href = '/'
         
         }).catch((response) => {
 

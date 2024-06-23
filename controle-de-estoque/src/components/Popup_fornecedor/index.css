@@ -1,0 +1,60 @@
+.popup_fornecedor {
+    width: 100%;
+    max-height: 20vh;
+    position: absolute;
+    background-color: white;
+    border: 1px solid rgb(243, 243, 243);
+    border-radius: 6px;
+    overflow-y: auto;
+}
+
+.list-ul-fornecedor_ {
+    width: 100%;    
+    list-style: none;
+    padding: 0px;
+}
+
+.list-item-fornecedor {
+    width: 100%;
+    padding: 10px;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid rgb(235, 235, 235);
+
+}
+
+.list-item-fornecedor:hover {
+    cursor: pointer;
+    background-color: rgb(243, 243, 243);
+}
+
+.p-cadastrar {
+    font-size: 14px;
+}
+
+.div-criar-fornecedor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    margin-top: 5%;
+
+    border-bottom: 1px solid rgb(243, 243, 243);
+}
+
+.div-criar-fornecedor:hover {
+    cursor: pointer;
+    background-color: rgb(243, 243, 243);
+}
+
+.paragrafo-popup-fornecedor-person {
+
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.paragrafo-popup-fornecedor-person > .person-color {
+    color: #35A398;
+}

@@ -61,7 +61,7 @@ export const FormProduto = ({ classFormProduto, setClassFormProduto }: Props) =>
     
         setItemDigitado(watch('categoria'));
     
-        }, [watch('categoria')])
+    }, [watch('categoria')])
     
 
     const closeForm = () => {
@@ -72,7 +72,7 @@ export const FormProduto = ({ classFormProduto, setClassFormProduto }: Props) =>
 
         const produto: IProduto = {
 
-            _id: '',
+            id: '',
             nome: nomeProduto,
             codigo_proprio: codigoProprio,
             categoria,
@@ -81,6 +81,7 @@ export const FormProduto = ({ classFormProduto, setClassFormProduto }: Props) =>
             preco_de_venda: precoDeVenda,
             estoque_atual: estoqueAtual,
             estoque_minimo: estoqueMinimo,
+            fornecedorId: '',
             total: '00,00'
 
         }
