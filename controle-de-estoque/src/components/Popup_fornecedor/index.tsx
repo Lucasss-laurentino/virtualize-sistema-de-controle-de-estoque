@@ -41,8 +41,8 @@ export const Popup_fornecedor = ({renderPopup, itemDigitado, setValue}: Props) =
             <div className="popup_fornecedor">                
                 <ul className='list-ul-fornecedor_ '>
                     {abreFechaForm && itemDigitado.length > 0 &&
-                    <div className="d-flex align-items-center justify-content-center w-100 pt-3">
-                        <p className="paragrafo-popup-fornecedor-person" onClick={() => criar_fornecedor(itemDigitado)}>Toque para cadastrar <strong className="person-color">'{itemDigitado}'</strong></p>
+                    <div className="d-flex hover-li align-items-center justify-content-center w-100 pt-3">
+                        <p className="paragrafo-popup-fornecedor-person " onClick={() => criar_fornecedor(itemDigitado)}>Toque para cadastrar <strong className="person-color">'{itemDigitado}'</strong></p>
                     </div>
                     }
 

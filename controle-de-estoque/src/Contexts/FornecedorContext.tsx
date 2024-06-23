@@ -9,7 +9,7 @@ type FornecedorType = {
     setFornecedores: React.Dispatch<SetStateAction<IFornecedor[]>>,
     pegar_fornecedores: () => void,
     criar_fornecedor: (itemDigitado: string) => void,
-    fornecedoresPopUp: IFornecedor[]
+    fornecedoresPopUp: IFornecedor[],
     setFornecedoresPopUp: React.Dispatch<SetStateAction<IFornecedor[]>>,
 }
 
@@ -19,6 +19,7 @@ export const FornecedorProvider = ({children}: {children: JSX.Element}) => {
 
     const [fornecedores, setFornecedores] = useState<IFornecedor[]>([]);
     const [fornecedoresPopUp, setFornecedoresPopUp] = useState<IFornecedor[]>([...fornecedores]);
+    const [fornecedorId, setFornecedorId] = useState('');
 
     const pegar_fornecedores = () => {
         //console.log('antes da req '+localStorage.getItem('token'))

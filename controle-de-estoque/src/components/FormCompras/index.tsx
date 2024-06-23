@@ -9,6 +9,7 @@ import IFornecedor from '../../types/Fornecedor';
 import IProduto from '../../types/Produto';
 import { Popup_fornecedor } from '../Popup_fornecedor';
 import { ProdutoContext } from '../../Contexts/ProdutoContext';
+import { Tabela_financeiro } from '../Tabela_financeiro';
 
 interface Props {
     classFormCompras: string,
@@ -195,6 +196,19 @@ export const FormCompras = ({ classFormCompras, setClassFormCompras }: Props) =>
                             </div>
                         </div>
                     </div>
+                    <div className="div-form-body mt-4 container d-flex justify-content-center align-items-center">
+                        <div className="col-11 bloco pt-2">
+                            <div className="title-row mb-3">
+                                <h6 className='px-3 color-title'>Financeiro</h6>
+                            </div>
+
+                            <Tabela_financeiro
+                            
+                            />
+                            
+                        </div>
+                    </div>
+
                     <div className="container d-flex justify-content-end col-11 mt-2">
                         <button className='btn-cadastrar-produto'>Salvar</button>
                     </div>

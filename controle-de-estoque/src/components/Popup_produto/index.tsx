@@ -84,7 +84,7 @@ export const Popup_produto = ({append, fieldId, fields, id_campo, index, renderP
 
     useEffect(() => {
         setItensPopup([...produtos]);
-    }, [/*produtos */]);
+    }, [produtos]);
 
     useEffect(() => {
 

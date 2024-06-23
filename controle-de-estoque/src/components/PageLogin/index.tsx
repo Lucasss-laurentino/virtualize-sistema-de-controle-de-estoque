@@ -121,6 +121,7 @@ export const PageLogin = ({ toggle, setToggle }: Props) => {
                         <div className="row justify-content-center">
                             <div className="container">
                                 <h5 className='py-3 px-4 title-produtos'>Login</h5>
+                                {/* FORM LOGIN */}
                                 <form action="" className='px-4' onSubmit={() => console.log('login')}>
                                     
                                     <input 

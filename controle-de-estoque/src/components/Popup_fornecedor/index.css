@@ -28,6 +28,12 @@
     cursor: pointer;
     background-color: rgb(243, 243, 243);
 }
+.hover-li:hover {
+
+    cursor: pointer;
+    background-color: rgb(243, 243, 243);
+
+}
 
 .p-cadastrar {
     font-size: 14px;

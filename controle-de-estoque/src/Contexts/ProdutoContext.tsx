@@ -20,11 +20,11 @@ export const ProdutoProvider = ({children}: {children: JSX.Element}) => {
 
     const [fornecedorId, setFornecedorId] = useState('');
 
-    const pegarProdutos = (fornecedorId: string) => {
+    const pegarProdutos = (fornecedorId: string) => { // essa função e chamado na popup fornecedor
 
         http.get(`/produtos/${fornecedorId}`).then((response) => { // MUDANÇA A FAZER - PASSAR PARAMETRO PELO BODY
 
-            console.log(response.data)
+            setProdutos([...response.data.produtos])
 
         }).catch((response) => {
 
