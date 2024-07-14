@@ -50,7 +50,22 @@ export const Tabela_financeiro = () => {
     const { fields, append } = useFieldArray({
         name: 'parcela',
         control
-    })
+    });
+
+    const [toggle, setToggle] = useState<boolean>(false);
+    const [classAnimateStatus, setClassAnimateStatus] = useState('ponteiro-checkbox');
+
+    const changeToggleBtn = async (id: string) => {
+
+        const input: HTMLElement | null = document.getElementById(id);
+
+        if(input instanceof HTMLElement && input.className === 'ponteiro-checkbox'){
+            input.className = 'ponteiro-checkbox-checked';
+        } else if (input instanceof HTMLElement && input.className === 'ponteiro-checkbox-checked') {
+            input.className = 'ponteiro-checkbox';
+        }
+
+    }
 
     return (
         <>
@@ -160,16 +175,26 @@ export const Tabela_financeiro = () => {
                                     </th>
                                     <th className='th-tabela-compras-produto col-1'>
                                         <div className="span-input col-12">
-                                            <div className="span-icon-input d-md-flex align-items-center">
-                                                <div className="col-12 color-title title-table justify-content-md-center d-md-none">
-                                                    <p className='txt-compras'>Status</p>
+                                            <div className="span-icon-input m-0 d-md-flex align-items-center height">
+                                                <div className="container-input-checkbox">
+                                                    <input
+                                                        {...register(`parcela.${index}.status`)}
+                                                        type="checkbox"
+                                                        id={`parcela.${index}.status`}
+                                                        className="check"
+                                                        onClick={
+                                                            () => {
+                                                                changeToggleBtn(`ponteiro-checkbox-${index}`)
+                                                            }
+                                                        }
+                                                    />
+                                                    <section className="section-checkbox">
+                                                        <span className="ponteiro">
+                                                            
+                                                        </span>
+                                                    </section>
                                                 </div>
-                                                <input
-                                                    {...register(`parcela.${index}.status`)}
-                                                    className='input-form-produto col-10 mx-1 my-3'
-                                                    type="text"
-                                                    placeholder='R$'
-                                                />
+
                                             </div>
                                         </div>
                                     </th>
@@ -187,7 +212,16 @@ export const Tabela_financeiro = () => {
                     <h6 className='px-3 color-title m-0'>Total</h6>
                 </div>
                 <div className="title-row ">
-                    <button className="btn btn-md btn-primary">Adicionar parcela</button>
+                    <button className="btn btn-md m-2 btn-primary" type="button" onClick={() => {
+                        append({
+                            parcela: '1/1',
+                            valor: 'R$ 0,00',
+                            dataDePagamento: '22/02/1996',
+                            contaDeOrigem: 'Caixa interno',
+                            palavraChave: '',
+                            status: false        
+                        })
+                    }}>Adicionar parcela</button>
                 </div>
 
             </div>

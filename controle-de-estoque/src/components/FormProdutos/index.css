@@ -59,6 +59,7 @@
 }
 
 .span-icon-input {
+    max-width: 100%;
     margin-left: 7%;
 }
 .bloco-float {
